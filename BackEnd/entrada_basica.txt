@@ -1,0 +1,641 @@
+###########################################################################################
+###########################################################################################
+###########################################################################################
+
+function retorna_NULL()
+    ass=100;
+    print("!!!!!!!!!!   entre en funcion returna null !!!!!!!!!!!       =>");
+    println(ass);
+end;
+
+retorna_NULL();
+
+function retorna_NULL2(a::Int64,b::String)
+    print(b);
+    print(" con paso parametros =>");
+    println(a);
+end;
+
+parametro_test=300022222221;
+retorna_NULL2(parametro_test,"CREO Q YA EsTA, GRACIAS DIOS");            #HASTA JULIA NO PUEDE XD
+
+###########################################################################################
+###########################################################################################
+###########################################################################################
+
+
+
+
+ #En este caso el vector [1,2] se transformará en [3,2]
+function valoreshhh(x::Int64,y::Int64)
+    #x[1] = 3;
+    println(x);
+    println(y)
+end;
+
+xh = 2099;
+valoreshhh(xh,3099);
+#print(xh);
+
+
+
+
+
+
+
+
+
+#DESDE AQUI EMPIEZA XD
+
+
+#------------------------------------------------------------
+println("=======================================================================");
+println("==========================FUNCIONES Y RETURN===========================");
+println("=======================================================================");
+
+
+function potenciaNativa(base::Int64, exponente::Int64)::Int64
+    resultado = base;
+    while exponente > 1
+        resultado = resultado * base;
+        exponente = exponente - 1;
+    end;
+    return resultado;
+end;
+
+
+function sumarTodo(num1::Int64, num2::Int64)::Int64
+    result = 0;
+    if num1 < 0 || num2 < 0
+        return -1;
+    end;
+
+    while num1 > 0 || num2 > 0
+        result = result + (num1 + num2);
+        num1 = num1 - 1;
+        num2 = num2 - 1;
+    end;
+    return result;
+end;
+
+println(potenciaNativa(5, 7));
+println(potenciaNativa(2, 2));
+println(potenciaNativa(4, 2));
+
+
+println(sumarTodo(5, 4));
+println(sumarTodo(-1, -5));
+println(sumarTodo(7, 7));
+
+
+
+function concatenar(a::String,b::String)::String
+    println("funcion concatenar");
+    return a*b;   
+end;
+
+
+
+function sumar(a::Int64,b::Int64)::Int64
+    println("funcion suma");
+    return a+b;   
+end;
+
+println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+
+println(sumar(5,100),"\n");#15
+println(concatenar("15","10"),"\n");#1510
+println(sumar(20,10),"\n");#30
+println(concatenar("20","10"),"\n");#2010
+
+
+
+
+
+
+
+
+
+
+
+
+println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#------------------------------------------------------------
+
+
+
+texto = "Justice League"::String;
+println(texto);
+
+condi=100;
+
+
+ab=1;
+if ab+1*2/3>3*80 && 3+9*4>6+8*7
+    a="hola2";
+    println(a);
+    texto="niuuu TuT";
+    println(texto);
+
+elseif 500>3000
+    texto="Cyntia"
+    println(texto);
+
+elseif true && !false
+    texto1="Elizabeth Olsen"    #PROPIO AMBITO NO SE PUEDE OBTENER AFUERA :'(  hacer q en if al crear la nuevaTabla hacer q self.table del compilar en param ->  self.table=nuevaTabla
+    println(texto1);
+
+elseif true==false
+    texto="Skarlett"
+    println(texto);
+else
+    a=12;
+    println(a);
+    texto="SOY UN ELSE >:v"
+    println(texto);
+
+end;
+
+
+print("------->");
+#println(texto1);                   #no acceso
+println("");
+
+
+
+num=0;
+
+while num<10
+    println(num);
+    if num==2
+        break;
+    end;
+    num = num+1;
+end;
+
+
+
+
+num = 0;
+while num < 10
+    num = num + 1;
+    if num == 5
+        continue;
+        println("       (ToT)   ");
+    end;
+    print(num);
+end;
+println("");
+
+
+
+
+
+
+while true
+    println(true); # Imprime solamente una vez true
+    break;
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################################################################################################################
+texto = "Avengers";
+println(texto*" EndGame");
+#println(texto=="Justice League");
+#println(texto=="Avengers");
+
+int64 = nothing;
+println(int64);
+
+int64 = "ya no soy un "*"Nothing, ahora soy string" #::String;# 145
+println(int64);
+
+float64 = 12.22/1+9;
+println(float64+1);
+
+bool = true;
+println(bool,"\n---------------fin acceso basico a variables-----------------\n");
+
+
+
+#----------------------------------------------------------
+
+println(2^4);#16
+println(5^9);#1,953,125
+println(1.2^9);#5.16
+println((5==10) == false);#true
+println(!(5==10) == false);#false
+println(" ")
+println((5==10) && (1!=1));#false
+println((5<=10) && !(1!=1));#true
+println(" ")
+println((5==10) || (1==1));#true
+println((5<=10) && !(1==1));#false
+
+
+println((55+3)/(3-3));
+
+println(true);
+println("-------------TEST DE CONCATENACION CON COMA-------------")
+println("Hola mundo",4-2,"\n soy Javier Alfaro");
+println("Hi"^3);
+println(2+1+7);
+println("-------------TEST DE MODULAR-------------")
+println(10-(2%4),"\n------------------------------------");
+
+
+println(9.78);
+println(700*(1+1.0-2*3.0/2+9.0-999+12)/8);
+println(3-3);
+println((2.1+8.9-24.0/4.0)+2.9);
+println((2+8-24/4)+2);
+println(6-3/(9+-9));
+println(6-3/(9.1+-9));
+println((55+3)/(3.9-3.9));
+
+#complexModular = (4-2) % (64/16)
+#println("----------------------------MODULAR HARD--------------------------",complexModular);
+
+index = 0
+    
+    while (index != 12)
+        index = index + 1;
+        if (index == 0 || index == 1 || index == 11 || index == 12) 
+            println("*********************************************************************************************************");
+        elseif (index == 2) 
+            println("*************************    *****************************   *******************              **********");
+        elseif (index >= 3 && index <= 5) 
+            println("*************************    ******                 ******   *******************  **********************");
+        elseif (index == 6) 
+            println("*************************    ******                 ******   *******************  **********************");
+        elseif (index >= 7 && index <= 9) 
+            println("*************************    ******                 ******   *******************  **********************");
+        elseif (index == 10) 
+            println("**********                   *****************************                ******              **********");
+        end;
+    end;
+
+
+
+
+println(5 + 5);
+println(1 * 100 / 2);
+println(5 > 0);
+println(true);
+println((5 == 10) == false);
+println((5 == 10) && (1 != 1));
+println((5 == 10) || (1 == 1));
+
+a = (10 + 10) * (8 / (2+2));
+b = "Que tal";
+c = true;
+
+println("Hola Mundo!");
+println(a);
+println(b);
+println(c);
+
+if true
+    println(true)
+end;
+
+if 5 > 1
+    println("If Normal");
+end;
+
+# IF ELSE
+if (5 - 10) < 0
+    println("If Else");
+else
+    println("If Else en else");
+end;
+
+# IF ELSEIF
+if 1 >= 2
+    println("If Elseif");
+elseif 1 <= 1
+    println("If Elseif en elseif");
+end;
+
+# IF ELSEIF ELSE
+if 10 == 11
+    println("If Elseif Else");
+elseif 10 != 11
+    println("If Elseif Else en Elseif");
+else
+    println("If Elseif Else en Else");
+end;
+
+
+# IF ELSEIF*2 ELSE
+if false
+    println("If Elseif*2 Else");
+elseif true
+    println("If Elseif*2 Else en Elseif1");
+elseif false
+    println("If Elseif*2 Else en Elseif2");
+else
+    println("If Elseif*2 Else en Else");
+end;
+
+if 5 > 1
+    println("If Normal");
+    if true
+        println("If dentro de If");
+        if false
+            println("If dentro de If dentro de If");
+        else
+            println("If dentro de If dentro de If en Else");
+        end;
+    elseif false
+        println("Else if dentro de If");
+    else
+        println("Else dentro de If");
+    end;
+end;
+
+a = 10;
+while a > 0
+    print("El valor de a es: ");
+    println(a);
+    a = a - 1;
+end;
+
+while a < 5
+    a = a + 1;
+    if a == 3
+        println("a");
+        continue;
+    elseif a == 4
+        println("b");
+        break;
+    end;
+    print("El valor de a es: ");
+    println(a);
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+println("");
+println("=======================================================================");
+println("=============================IFs ANIDADOS==============================");
+println("=======================================================================");
+aux = 10;
+if aux > 0
+    println("PRIMER IF CORRECTO");
+    if true && (aux == 1)
+        println("SEGUNDO IF INCORRECTO");
+    elseif aux > 10
+        println("SEGUNDO IF INCORRECTO");
+    else
+        println("SEGUNDO IF CORRECTO");
+    end;
+elseif aux <= 3
+    println("PRIMER IF INCORRECTO");
+    if true && (aux == 1)
+        println("SEGUNDO IF INCORRECTO");
+    elseif aux > 10
+        println("SEGUNDO IF INCORRECTO");
+    else
+        println("SEGUNDO IF CORRECTO");
+    end;
+elseif aux == 89
+    println("PRIMER IF INCORRECTO");
+    if true && (aux == 1)
+        println("SEGUNDO IF INCORRECTO");
+    elseif aux > 10
+        println("SEGUNDO IF INCORRECTO");
+    else
+        println("SEGUNDO IF CORRECTO");
+    end;
+end;
+
+println("");
+println("=======================================================================");
+println("=================================WHILE=================================");
+println("=======================================================================");
+
+index = 0;  #al tener el ::Int64; no sobreescribo porq estoy ahi declarando por pimera vez
+
+while (index >= 0) 
+
+    if (index == 0) 
+        global index = index + 100;
+    elseif (index > 50) 
+        global index = index / 2 - 25;
+    else 
+        global index = (index / 2) - 1;
+    end;
+
+    println(index);
+end;
+
+println("");
+println("=======================================================================");
+println("================================WHILE-2================================");
+println("=======================================================================");
+
+index = -2;
+index = index + 1;
+
+while (index != 12)
+    global index = index + 1;
+    if (index == 0 || index == 1 || index == 11 || index == 12) 
+        println("*********************************************************************************************************");
+    elseif (index == 2) 
+        println("**********  ***************  ******                 ******                 ******              **********");
+    elseif (index >= 3 && index <= 5) 
+        println("**********  ***************  ******  *********************  *************  ******  **********************");
+    elseif (index == 6) 
+        println("**********  ***************  ******                 ******                 ******  **********************");
+    elseif (index >= 7 && index <= 9) 
+        println("**********  ***************  ********************   ******  *************  ******  **********************");
+    elseif (index == 10) 
+        println("**********                   ******                 ******  *************  ******              **********");
+    end;
+end;
+
+println("");
+println("=======================================================================");
+println("=============================TRANSFERENCIA=============================");
+println("=======================================================================");
+
+a = -1;
+while (a < 5)
+    global a = a + 1;
+    if a == 3
+        print("a");
+        continue;
+    elseif a == 4
+        println("b");
+        break;
+    end;
+
+    print("El valor de a es: ")
+    print(a);
+    println(", ");
+end;
+
+println("Se debio imprimir");
+
+println("");
+println("=======================================================================");
+println("==================================FOR==================================");
+println("=======================================================================");
+
+println("AUN NO HAY NADA XD");
+
+
+
+
+
+
+
+
+
+
+
+
+#=
+function fib(n::Int64)::Int64
+    if n < 2
+        return n;
+    #else
+        # fn = fn-1 + fn-2
+     #   return fib(n-1) + fib(n-2);#las aritmeticas me dan error :/ por eso no retorna nada
+    end;
+end;
+
+
+println("SERIE DE FIBONACCI:",fib(1));
+=#
+
+
+
+
+
+
+var =90;
+acc=true;
+
+areli="ARELIS <3 ";
+println("LOWER-CASE:",lowercase(areli),"\n");
+
+println("POTENCIA:",areli^2,"\n");
+
+areli2="arelis <3";
+areli2 = uppercase(areli2);
+println("UPPER-CASE:",areli2);
+println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+ochenta=89;
+println(float(ochenta));
+println(float(99));
+
+
+println(trunc(Int64,3.999));#3
+
+cuatro=4.999;
+cuatro=trunc(Int64,cuatro);
+println(cuatro);#4
+
+
+#=
+# Ejemplo de return
+function funcionR()::Int64
+    num = 0;
+    while num < 10
+        num = num + 1;
+        if num == 5
+            return 5;
+        end;
+        print(num);
+    end;
+    return 0;
+end;
+
+println(funcionR(),"\n");
+
+
+
+# Ejemplo 2: Aclaraciones de scope
+x = 15;
+y = 44;
+function ejemplo2()
+    global y; #JOLC en la asignación no toma la variable global, crea una nueva.
+    y = 5;
+    println(x); #JOLC en la llamada a una variable SI busca en el entorno local y luego en el global.
+    end;
+
+ejemplo2();
+println(x);
+println(y);
+=#
+
+println("--------------------------------------------------------");
+
+mayusculas="Que bueno es "* "este dia!";
+elevado="!";
+minusculas="NO TODO LO QUE PARECE ES cIERTO,"*elevado^5;
+
+println(elevado^5);
+println(uppercase(mayusculas));
+println(lowercase(minusculas));
+
+
+
+
+
+
+
+
+asazp="1"*"2";
+
+cad1 = "Arelis";
+cad2 = "aRELIs";
+cad3 = cad1;
+
+println(cad1 == cad3);
+println(cad1 != cad2);
+
+println(cad1 != cad3);
+println(cad1 == cad2);
+
+if cad1 == cad3
+    println("YUPIIIIIII");
+end;
