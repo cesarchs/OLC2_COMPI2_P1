@@ -16,7 +16,7 @@ MirillaJOLC={}
 #@app.route("/", methods=["POST","GET"])
 @app.route("/",methods=["GET"])
 def helloWorld():
-  return "<h1>Javier Roberto Alfaro Vividor - 201700644</h1>"
+  return "<h1>CESAR LEONEL CHAMALE SICAN - 201700634</h1>"
 
 
 @app.route("/Flask", methods=["POST"])
@@ -67,7 +67,7 @@ def Mirilla():
 
 
     
-if __name__ == "__app__":
+if __name__ == "__main__":
   app.run( port=5000,debug=True)
 
 #if __name__ == "__app__":

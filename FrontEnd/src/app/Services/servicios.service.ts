@@ -26,7 +26,7 @@ export class ServiciosService {
     CargaTiendas(txt: string){
       console.log("***********************************************************************\n"+txt)
       var json = JSON.parse(txt);
-      return this.http.post('http://localhost:3000/cargartienda',json )
+      return this.http.post('http://localhost:5000/cargartienda',json )
     }
 
 
@@ -34,7 +34,7 @@ export class ServiciosService {
     Flask(txt:any){
       console.log("____________\n"+txt)
       //var json = JSON.parse(txt);
-      return this.http.post('https://juliabackend201700644.herokuapp.com/Flask',txt )
+      return this.http.post('http://127.0.0.1:5000/Flask',txt )
     }
 
 
@@ -42,7 +42,7 @@ export class ServiciosService {
     FlaskMirilla(txt:any){
       console.log("____________\n"+txt)
       //var json = JSON.parse(txt);
-      return this.http.post('https://juliabackend201700644.herokuapp.com/FlaskMirilla',txt )
+      return this.http.post('http://127.0.0.1:5000/FlaskMirilla',txt )
     }
 
 
