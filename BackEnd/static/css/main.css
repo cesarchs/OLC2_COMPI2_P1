@@ -1,0 +1,25 @@
+body,html {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+
+.CodeMirror {
+	height: 70vh;
+  width:  610px;
+	font-size: 14px;
+}
+
+
+.city2{
+  position: relative;
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: auto;
+}
+
+  
