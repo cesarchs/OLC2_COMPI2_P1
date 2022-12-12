@@ -11,8 +11,8 @@ app.secret_key="123456"
 
 CORS(app)
 
-AnalisisJOLC={}
-MirillaJOLC={}
+AnalisisPyToPy={}
+MirillaPyToPy={}
 #@app.route("/", methods=["POST","GET"])
 @app.route("/",methods=["GET"])
 def helloWorld():
@@ -29,17 +29,17 @@ def FUNCIONAAA():
     analsis = Analizador()
     analsis.Main(Input+"\n")#para q el EOF no la joda
 
-    global AnalisisJOLC
-    AnalisisJOLC['AST']=analsis.grafo
-    AnalisisJOLC['TABLASIMBOLO']=analsis.TablaSimbolosREPORT#analsis.ast.getTablaSimbolosGlobal()#     falta aun 
-    AnalisisJOLC['CONSOLA']=analsis.C3D
-    AnalisisJOLC['ERRORES']=analsis.erroresSTR#analsis.ast.getExcepciones()
+    global AnalisisPyToPy
+    AnalisisPyToPy['AST']=analsis.grafo
+    AnalisisPyToPy['TABLASIMBOLO']=analsis.TablaSimbolosREPORT#analsis.ast.getTablaSimbolosGlobal()#     falta aun 
+    AnalisisPyToPy['CONSOLA']=analsis.C3D
+    AnalisisPyToPy['ERRORES']=analsis.erroresSTR#analsis.ast.getExcepciones()
 
     print(str(analsis.ast.getExcepciones()))
 
 
     #cosa = {"hola":"holaMundo desde flask"}
-    return jsonify( AnalisisJOLC)
+    return jsonify( AnalisisPyToPy)
 
 
 
@@ -51,16 +51,16 @@ def Mirilla():
     analsis = Analizador()
     analsis.Mirilla(Input)#para q el EOF no la joda
 
-    global MirillaJOLC
-    MirillaJOLC['C3D_OPTIMIZADO_MIRILLA']=analsis.OptimizacionMirilla
-    MirillaJOLC['REPORTES_MIRILLA']=analsis.ErroresMirilla
+    global MirillaPyToPy
+    MirillaPyToPy['C3D_OPTIMIZADO_MIRILLA']=analsis.OptimizacionMirilla
+    MirillaPyToPy['REPORTES_MIRILLA']=analsis.ErroresMirilla
     
 
     print(analsis.OptimizacionMirilla)
 
 
     #cosa = {"hola":"holaMundo desde flask"}
-    return jsonify(  MirillaJOLC)
+    return jsonify(  MirillaPyToPy)
 
 
 
