@@ -1,2 +1,6 @@
 ast.pdf
 codemirror
+
+**/__pycache__/**
+parser.out
+parsetab.py
