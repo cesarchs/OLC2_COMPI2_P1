@@ -1,5 +1,5 @@
-from flask import Flask, request,jsonify#,url_for,render_template,redirect,flash
-from flask_cors import CORS   #para que la conexion fornt-back se de sino F
+from flask import Flask, request,jsonify,render_template#,url_for,render_template,redirect,flash
+#from flask_cors import CORS   #para que la conexion fornt-back se de sino F
 from Interprete import Analizador
 
 
@@ -7,9 +7,17 @@ from Interprete import Analizador
 
 
 app = Flask(__name__)
-app.secret_key="123456"
+#app.secret_key="123456"
 
-CORS(app)
+#CORS(app)
+
+
+f = open("entrada.py","r",encoding="utf-8")
+entrada = f.read()
+
+valor=entrada
+
+
 
 AnalisisPyToPy={}
 MirillaPyToPy={}
@@ -67,8 +75,11 @@ def Mirilla():
 
 
     
-if __name__ == "__main__":
-  app.run( port=5000,debug=True)
+#if __name__ == "__main__":
+#  app.run( port=5000,debug=True)
 
 #if __name__ == "__app__":
  #   app.run(debug=True)#para que se actualice al detectar cambios
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0')
