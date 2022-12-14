@@ -1,23 +1,26 @@
-from flask import Flask, request,jsonify,render_template#,url_for,render_template,redirect,flash
-#from flask_cors import CORS   #para que la conexion fornt-back se de sino F
-from Interprete import Analizador
-
-
-
+from flask import Flask, request,jsonify,render_template
 
 
 app = Flask(__name__)
-#app.secret_key="123456"
-
-#CORS(app)
 
 
-f = open("entrada.py","r",encoding="utf-8")
-entrada = f.read()
+f = open("entrada.py","r",encoding="utf-8") # Abrimos archivo de entrada inicial
+entrada = f.read()                          # metodo de leer archivo de entrada inicial
+valor=entrada                               # Guardamos en una variable el valor inicial
 
-valor=entrada
-
-
+# Valores iniciales del diccionario de errores.
+erroress={}
+erroress['entrada']=valor
+erroress['arbol']="digraph{PYTHON->PyToPy}"
+erroress['ts']=[]
+erroress['ts'].append({'no':'1','id':'-','tipo':'-','ambito':'-','valor':'-','fil':'-','col':'-'})
+erroress['error']=[]
+erroress['error'].append({'no':'0','tipo':'-','des':'-','fil':'-','col':'-','fecha':'-'})
+erroress['consola']="aun no se ha realizado ningun analisis"
+erroress['c3d']=''
+erroress['bloques']=''
+erroress['reporteMirilla']=[]
+erroress['reporteBloques']=[]
 
 AnalisisPyToPy={}
 MirillaPyToPy={}
