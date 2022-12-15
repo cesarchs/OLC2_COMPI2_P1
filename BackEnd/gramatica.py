@@ -19,12 +19,11 @@ ListaErrores = []
 
 #LISTA DE PALABRAS RESERVADAS PARA pytopy
 reservadas = {
-    'nothing'   : 'RNOTHING',
-    'Int64'     : 'RINT',
-    'Float64'   : 'RFLOAT',
-    'Bool'      : 'RBOOL',
+    'None'   : 'RNOTHING',
+    'int'     : 'RINT',
+    'bool'      : 'RBOOL',
     'Char'      : 'RCHAR',  
-    'String'    : 'RSTRING',
+    'string'    : 'RSTRING',
     'struct'    : 'RSTRUCT',
     'mutable'   : 'RMUTABLE',
     'log10'     : 'RLOGT',
@@ -49,8 +48,8 @@ reservadas = {
     'in'        : 'RIN',
     'push!'     : 'RPUSHFNA',
     'length'    : 'RLENGTHFNA',
-    'true'      : 'RTRUE',
-    'false'     : 'RFALSE',
+    'True'      : 'RTRUE',
+    'False'     : 'RFALSE',
     'break'     : 'RBREAK',
     'continue'  : 'RCONTINUE',
     'return'    : 'RRETURN',
@@ -73,7 +72,7 @@ tokens = [
     'POR',
     'DIV',
     'MOD', # %
-    'POTEN', #^
+    'POTEN', #^ - ese deberia de ser, pero se pidio **
     'IGUALDAD',
     'DIFERENTE',
     'MAYORQ',
@@ -108,7 +107,7 @@ t_MENOS         = r'-'
 t_POR           = r'\*'
 t_DIV           = r'/'
 t_MOD           = r'%'
-t_POTEN         = r'\^'
+t_POTEN         = r'\*\*'
 t_IGUALDAD      = r'=='
 t_DIFERENTE     = r'!='
 t_MAYORQ        = r'>'
