@@ -45,3 +45,23 @@ class Bandera(Enum):
     FALSO = 0
     VERDADERO = 1
     
+#******************** RETORNO ************************************
+class Return:
+    def __init__(self,valor,tipoRetorno,esTemporal,auxTipo = ""):
+        self.valor = valor
+        self.tipo = tipoRetorno
+        self.auxTipo = auxTipo
+        self.esTemporal = esTemporal
+        self.trueLbl = ''
+        self.falseLbl = ''
+        self.array = None
+        self.dimensiones=None
+        self.dimensionesenacceso=None
+        self.LblsalirArray=None
+
+    def getValor(self):
+        genAux = Generador()
+        generator = genAux.getInstance()
+        generator.liberarTemporal(self.valor)
+        return self.valor
+    
