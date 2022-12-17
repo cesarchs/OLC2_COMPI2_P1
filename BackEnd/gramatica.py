@@ -53,6 +53,8 @@ reservadas = {
     'not'       : 'NOT'
 }
 
+
+
 #SIMBOLOS EN LENGUAJE pytopy
 tokens = [
     'PTCOMA',
@@ -86,6 +88,11 @@ tokens = [
     'POINT'  
 ] + list(reservadas.values())
 
+
+
+
+
+
 #DEFINIENDO PALABRAS CON SIMBOLOS
 t_PTCOMA        = r';'
 t_PARIZQ        = r'\('
@@ -108,9 +115,9 @@ t_MAYORQ        = r'>'
 t_MENORQ        = r'<'
 t_MAYORIGUALQ   = r'>='
 t_MENORIGUALQ   = r'<='
-t_AND           = r'&&'
-t_OR            = r'\|\|'
-t_NOT           = r'!'
+#t_AND           = r'&&'
+#t_OR            = r'\|\|'
+#t_NOT           = r'!'
 t_IGUAL         = r'='
 t_COMA          = r','
 t_POINT         = r'\.'
