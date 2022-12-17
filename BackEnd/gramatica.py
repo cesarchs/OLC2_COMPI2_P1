@@ -46,7 +46,11 @@ reservadas = {
     'break'     : 'RBREAK',
     'continue'  : 'RCONTINUE',
     'return'    : 'RRETURN',
-    'Vector'    : 'RVECTOR'
+    'Vector'    : 'RVECTOR',
+    #nuevos por cambio de sitaxis del sistema
+    'and'       : 'AND',
+    'or'        : 'OR',
+    'not'       : 'NOT'
 }
 
 #SIMBOLOS EN LENGUAJE pytopy
