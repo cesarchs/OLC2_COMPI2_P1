@@ -222,6 +222,48 @@ precedence = (
 	)
 
 
+
+
+from instrucciones.imprimir import Imprimir, ImprimirLn
+from instrucciones.insWhile import Mientras
+from instrucciones.breeak import Break
+from instrucciones.continuar import Continue
+from instrucciones.retorn import Retorno
+from instrucciones.funcs import Funcion
+from instrucciones.InsIF import InstrSi
+from instrucciones.Foor import Para,ParaArray,ParaArrayD,ParaStr
+from instrucciones.llamda import Llamada
+from instrucciones.declaraciones import Declaracion, DeclaracionLocal,DeclaracionGlobal,DeclaracionLocalSinValor,DeclaracionGlobalSinValor
+from instrucciones.decarray import DeclaracionArreglo
+from instrucciones.modifyarray import CambiarArreglo
+from instrucciones.accesoarray import AccesoArreglo,AccesoArregloBE
+from instrucciones.copyarrayy import CopiarArreglo
+from instrucciones.structss import NuevoStruct,AtributosStruct
+from instrucciones.accesostruc import AccesoStruct
+#from Nativas.tamañoarr import TamanoArreglo,TamanoArregloS
+from instrucciones.pusharray import EmpujarArray,EmpujarArrayD,EmpujarArrayExp
+from instrucciones.asigstruct import AsignacionStruct
+from Expresiones.ids import Identificador
+from Expresiones.primitivos import Primitivo
+from Expresiones.aritmeticas import Aritmetica
+from Expresiones.relacionales import Relacion
+from Expresiones.logicas import Logica
+#from Nativas.uppers import Upper,Lower
+#from Nativas.parse import Parse
+#from Nativas.truncamiento import Trunc
+#from Nativas.floate import Flooaat
+#from Nativas.stringgg import Stringgss
+#from Nativas.typeoof import Typeoff
+#from Nativas.raiz import Raiz
+#from Nativas.popnf import PopArr
+#from Nativas.trigonometricas import *
+#from Nativas.logaritmo import *
+from almacenar.tipo import *
+
+
+
+
+
 def p_inicio(t):
     'inicio         : instrucciones'
     t[0] = t[1]
@@ -238,7 +280,6 @@ def p_instrucciones_instruccion(t):
         t[0] = []
     else:    
         t[0] = [t[1]] 
-
 
 #***********************************
 #******INSTRUCCIONES POSIBLES*******
@@ -267,7 +308,6 @@ def p_instruccion(t):
                     '''
     t[0] = t[1]
 
-# | instr_consstruct opcion_ptcoma
 def p_opcion_ptcoma(t):
     ''' opcion_ptcoma   :   PTCOMA
                         |   '''
@@ -277,3 +317,116 @@ def p_instruccion_error(t):             # ACA en error tambiem debemos de dejar 
     'instruccion    : error PTCOMA'
     ListaErrores.append(Error("SINTACTICO","Sinxtaxis incorrecta "+str(t[1].value), t.lineno(1), buscar_columna(input, t.slice[1])))
     t[0] =""
+
+#////////////////////////////////////////////////////////INSTRUCCION PRINT/////////////////////////////////////////////////////////////////
+
+def p_instr_imprimir(t):
+    #print(expresión);
+    'instr_imprimir : RPRINT PARIZQ lexp PARDER '
+    t[0] = Imprimir(t[3],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_instr_imprimirln(t):
+    #println(expresión);
+    'instr_imprimirln : RPRINTLN PARIZQ lexp PARDER '
+    t[0] = ImprimirLn(t[3],t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_exp_coma(t):
+    'lexp   : lexp COMA expresion'
+    #t[0] = Aritmetica(OpsAritmetico.COMA,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    t[1].append(t[3])
+    t[0]=t[1]
+
+def p_expst(t):
+    'lexp   : expresion'
+    t[0] = [t[1]]
+#////////////////////////////////////////////////////////INSTRUCCION DECLARACION/////////////////////////////////////////////////////////////////
+#***SIN TIPO 
+def p_instr_declaracion_sintipo(t):
+    # ID = Expresión;  #SI NO TRAEN GLOBAL ES LOCAL EN EL AMBITO CORRESPONDIENTE
+    #EN ESTA PRODUCCION NO SE SABE SI SERA UNA MODIFICACION GLOBAL O LOCAL
+    'instr_declaracion : ID IGUAL expresion '
+    t[0] = Declaracion(t[1],t[3],None,t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+###CON PALABRA RESERVADA LOCAL###
+def p_instr_declaracion_sintipo_local(t):
+    # LOCAL ID = EXP;
+    'instr_declaracion : RLOCAL ID IGUAL expresion '
+    t[0] = DeclaracionLocal(t[2],t[4],None,t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_instr_declaracion_local(t):
+    # LOCAL ID;
+    'instr_declaracion : RLOCAL ID '
+    t[0] = DeclaracionLocalSinValor(t[2],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_instr_declaracion_global(t):
+    # LOCAL ID;
+    'instr_declaracion : RGLOBAL ID '
+    t[0] = DeclaracionGlobalSinValor(t[2],t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+###CON PALABRA RESERVADA GLOBAL###
+def p_instr_declaracion_sintipo_global(t):
+    # GLOBAL ID = EXP;
+    'instr_declaracion : RGLOBAL ID IGUAL expresion '
+    t[0] = DeclaracionGlobal(t[2],t[4],None,t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+#***CON TIPO 
+def p_instr_declaraciontipo(t):
+    #EN ESTA PRODUCCION NO SE SABE SI SERA UNA MODIFICACION GLOBAL O LOCAL
+    'instr_declaraciontipo : ID IGUAL expresion DDP tipof '
+    t[0] = Declaracion(t[1],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+###CON PALABRA RESERVADA LOCAL###
+def p_instr_declaraciontipo_local(t):
+    #LOCAL ID = EXP :: TIPO
+    'instr_declaraciontipo : RLOCAL ID IGUAL expresion DDP tipof'
+    t[0] = DeclaracionLocal(t[2],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+###CON PALABRA RESERVADA LOCAL###
+def p_instr_declaraciontipo_global(t):
+    #LOCAL ID = EXP :: TIPO
+    'instr_declaraciontipo : RGLOBAL ID IGUAL expresion DDP tipof '
+    t[0] = DeclaracionGlobal(t[2],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+#///////////////////////////////////////////////////////////////////////////DECLARACION Y MOD ARREGLOS///////////////////////////////////////////////////////////////////////////
+def p_instr_declararreglo(t):
+    
+    'instr_declararreglo    : ID IGUAL CORIZQ tist CORDER '
+    t[0] = DeclaracionArreglo(t[1],t[4],None,t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_instr_declararreglon(t):
+    
+    'instr_declararreglo    : ID IGUAL CORIZQ tist CORDER DDP RVECTOR LLAVEA masrvector LLAVEC '
+    t[0] = DeclaracionArreglo(t[1],t[4],t[9],t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_masrvector(t):
+    'masrvector             : masrvector RVECTOR '
+    t[0]=t[1]
+    
+def p_masrvectorr(t):
+    'masrvector             : frevector '
+    t[0]=t[1]
+
+def p_frevector(t):
+    'frevector              : tipof '
+    t[0]=t[1]
+
+def p_frevectorr(t):
+    'frevector              : RVECTOR LLAVEA masrvector LLAVEC '
+    t[0]=[t[3]]
+
+
+def p_lista_ex(t):
+    'tist      :  tist COMA fis'
+    t[1].append(t[3])
+    t[0]=t[1]
+def p_lista_ex2(t):
+    'tist       :  fis '
+    t[0] = [t[1]]
+
+def p_liss_un(t):
+    'fis           : expresion  '
+    t[0] = t[1]
+    
+def p_liss_und(t):
+    'fis           : CORIZQ tist CORDER  '
+    t[0] = t[2]
