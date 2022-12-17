@@ -213,24 +213,67 @@ precedence = (
     ('left', 'COMA','DP'),
     ('left', 'OR'),
     ('left', 'AND'),
-    ('right', 'UNOT'), #!5... !a 
+    ('right', 'UNOT'),                  #!5... !a 
     ('left','MAYORQ','MENORQ','MAYORIGUALQ','MENORIGUALQ','DIFERENTE','IGUALDAD'),
-	('left', 'MAS', 'MENOS'), #HACIA LA IZQUIERDA ASOCIA 4+5+8-> DE ESTA MANERA: (4+5)=9+8 asocia el primer mas con lo de la izquierda suc
+	('left', 'MAS', 'MENOS'),           #HACIA LA IZQUIERDA ASOCIA 4+5+8-> DE ESTA MANERA: (4+5)=9+8 asocia el primer mas con lo de la izquierda suc
 	('left', 'POR', 'DIV','MOD'),
-	('right','UMENOS'), #lo asocia asi -8+4+3 => -8 => (-8)+(4+3)
+	('right','UMENOS'),                 #lo asocia asi -8+4+3 => -8 => (-8)+(4+3)
 	('right', 'POTEN'),
 	)
 
 
 def p_inicio(t):
-    'inicio : instrucciones'
-    t[0]=t[1]
+    'inicio         : instrucciones'
+    t[0] = t[1]
 
 def p_instrucciones_lista(t):
-    'instrucciones : instrucciones instruccion'
+    'instrucciones  : instrucciones instruccion'
     if t[2] != "":
-        t[1].append(t[2]) #t1 es una lista entonces solo se agregan las instrucciones 
-    t[0]=t[1] # luego se copia a t0
+        t[1].append(t[2])               #t1 es una lista entonces solo se agregan las instrucciones
+    t[0] = t[1]                         #y luego se copia a t0
+
+def p_instrucciones_instruccion(t):
+    'instrucciones  : instruccion'              
+    if t[1] == "":                      #padre: instrucciones hace una lista para meter a t1 que es instruccion
+        t[0] = []
+    else:    
+        t[0] = [t[1]] 
 
 
-    
+#***********************************
+#******INSTRUCCIONES POSIBLES*******
+#***********************************
+
+def p_instruccion(t):
+                    # instr_declaracion:tambien puede ser instr_asignacion
+    '''instruccion  : instr_imprimir opcion_ptcoma
+                    | instr_imprimirln opcion_ptcoma
+                    | instr_declaracion opcion_ptcoma
+                    | instr_declaraciontipo opcion_ptcoma
+                    | instr_if opcion_ptcoma
+                    | instr_while opcion_ptcoma
+                    | instr_break opcion_ptcoma
+                    | instr_continue opcion_ptcoma
+                    | instr_for opcion_ptcoma
+                    | instr_func opcion_ptcoma
+                    | instr_llamada opcion_ptcoma
+                    | instr_return opcion_ptcoma
+                    | instr_declararreglo opcion_ptcoma
+                    | instr_copyarray opcion_ptcoma
+                    | modify_array opcion_ptcoma
+                    | instr_push opcion_ptcoma
+                    | instr_crearstruct opcion_ptcoma                  
+                    | isntr_asigatribstruct opcion_ptcoma
+                    '''
+    t[0] = t[1]
+
+# | instr_consstruct opcion_ptcoma
+def p_opcion_ptcoma(t):
+    ''' opcion_ptcoma   :   PTCOMA
+                        |   '''
+    t[0]=None                           # este lo dejamos por que lo podemos necesitar para cerrar algun metodo en la gramatica, pero no lo pide por se python, por esa razon la dejamos opcional
+
+def p_instruccion_error(t):             # ACA en error tambiem debemos de dejar opcional el punto y coma, pero no lo hacemos por ahora, dado a que no sabemos como va a trabajar sin eso.
+    'instruccion    : error PTCOMA'
+    ListaErrores.append(Error("SINTACTICO","Sinxtaxis incorrecta "+str(t[1].value), t.lineno(1), buscar_columna(input, t.slice[1])))
+    t[0] =""
