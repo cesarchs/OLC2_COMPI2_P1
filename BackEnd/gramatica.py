@@ -430,3 +430,45 @@ def p_liss_un(t):
 def p_liss_und(t):
     'fis           : CORIZQ tist CORDER  '
     t[0] = t[2]
+    
+#///////////////////////////////////////////////////////////////////////////MOD ARREGLOS///////////////////////////////////////////////////////////////////////////
+def p_modify_array(t):
+    'modify_array   :   ID lista_corchetes IGUAL expresion'
+    t[0] = CambiarArreglo(t[1],t[2],t[4],t.lineno(1),buscar_columna(input, t.slice[1]))
+def p_listacorchetes(t):
+    'lista_corchetes    :   lista_corchetes CORIZQ expresion CORDER'
+    t[1].append(t[3])
+    t[0] = t[1]
+
+def p_listacorchetes_2(t):
+    'lista_corchetes    :   CORIZQ expresion CORDER'  
+    t[0] = [t[2]]
+
+    #///////////////////////////////////////////////////////////////////////////STRUCTS///////////////////////////////////////////////////////////////////////////
+#IN-MUTABLE
+def p_instr_crearstruct(t):
+    'instr_crearstruct  :   RSTRUCT ID listatributes PTCOMA REND'
+                       #ID  atributs  mutable?
+    t[0] = NuevoStruct(t[2], t[3],    False,    t.lineno(1),buscar_columna(input, t.slice[1]))
+#MUTABLE
+def p_instr_crearstructM(t):
+    'instr_crearstruct  :   RMUTABLE RSTRUCT ID listatributes PTCOMA REND'
+                    #    ID  ATRIBUTS  MUTABLE?
+    t[0] = NuevoStruct(t[3], t[4],    True,    t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_listatributes(t):
+    'listatributes    :   listatributes PTCOMA idss '
+    t[1].append(t[3])
+    t[0]=t[1]
+def p_listatributesd(t):
+    'listatributes    :   idss'
+    t[0]=[t[1]]
+def p_iddssu(t):
+    'idss    : ID '
+    #                     ID   ::    TIPO    bandera si puede cambiar tipo
+    t[0]=AtributosStruct(t[1],     Tipo.NULO, True)
+    
+def p_iddss(t):
+    'idss   : ID  DDP tipof'
+    #                    ID   ::  TIPO      bandera si puede cambiar tipo
+    t[0]=AtributosStruct(t[1],     t[3],    False)
