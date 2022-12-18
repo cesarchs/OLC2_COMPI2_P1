@@ -240,7 +240,7 @@ from instrucciones.accesoarray import AccesoArreglo,AccesoArregloBE
 from instrucciones.copyarrayy import CopiarArreglo
 from instrucciones.structss import NuevoStruct,AtributosStruct
 from instrucciones.accesostruc import AccesoStruct
-#from Nativas.tamañoarr import TamanoArreglo,TamanoArregloS
+from Nativas.tamañoarr import TamanoArreglo,TamanoArregloS
 from instrucciones.pusharray import EmpujarArray,EmpujarArrayD,EmpujarArrayExp
 from instrucciones.asigstruct import AsignacionStruct
 from Expresiones.ids import Identificador
@@ -248,16 +248,16 @@ from Expresiones.primitivos import Primitivo
 from Expresiones.aritmeticas import Aritmetica
 from Expresiones.relacionales import Relacion
 from Expresiones.logicas import Logica
-#from Nativas.uppers import Upper,Lower
-#from Nativas.parse import Parse
-#from Nativas.truncamiento import Trunc
-#from Nativas.floate import Flooaat
-#from Nativas.stringgg import Stringgss
-#from Nativas.typeoof import Typeoff
-#from Nativas.raiz import Raiz
-#from Nativas.popnf import PopArr
-#from Nativas.trigonometricas import *
-#from Nativas.logaritmo import *
+from Nativas.uppers import Upper,Lower
+from Nativas.parse import Parse
+from Nativas.truncamiento import Trunc
+from Nativas.floate import Flooaat
+from Nativas.stringgg import Stringgss
+from Nativas.typeoof import Typeoff
+from Nativas.raiz import Raiz
+from Nativas.popnf import PopArr
+from Nativas.trigonometricas import *
+from Nativas.logaritmo import *
 from almacenar.tipo import *
 
 
