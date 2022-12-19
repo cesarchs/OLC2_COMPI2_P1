@@ -372,19 +372,19 @@ def p_instr_declaracion_sintipo_global(t):
 #***CON TIPO 
 def p_instr_declaraciontipo(t):
     #EN ESTA PRODUCCION NO SE SABE SI SERA UNA MODIFICACION GLOBAL O LOCAL
-    'instr_declaraciontipo : ID IGUAL expresion DDP tipof '
+    'instr_declaraciontipo : ID IGUAL expresion DP tipof '
     t[0] = Declaracion(t[1],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 ###CON PALABRA RESERVADA LOCAL###
 def p_instr_declaraciontipo_local(t):
     #LOCAL ID = EXP :: TIPO
-    'instr_declaraciontipo : RLOCAL ID IGUAL expresion DDP tipof'
+    'instr_declaraciontipo : RLOCAL ID IGUAL expresion DP tipof'
     t[0] = DeclaracionLocal(t[2],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 ###CON PALABRA RESERVADA LOCAL###
 def p_instr_declaraciontipo_global(t):
     #LOCAL ID = EXP :: TIPO
-    'instr_declaraciontipo : RGLOBAL ID IGUAL expresion DDP tipof '
+    'instr_declaraciontipo : RGLOBAL ID IGUAL expresion DP tipof '
     t[0] = DeclaracionGlobal(t[2],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 #///////////////////////////////////////////////////////////////////////////DECLARACION Y MOD ARREGLOS///////////////////////////////////////////////////////////////////////////
@@ -395,7 +395,7 @@ def p_instr_declararreglo(t):
 
 def p_instr_declararreglon(t):
     
-    'instr_declararreglo    : ID IGUAL CORIZQ tist CORDER DDP RVECTOR LLAVEA masrvector LLAVEC '
+    'instr_declararreglo    : ID IGUAL CORIZQ tist CORDER DP RVECTOR LLAVEA masrvector LLAVEC '
     t[0] = DeclaracionArreglo(t[1],t[4],t[9],t.lineno(1),buscar_columna(input, t.slice[1]))
     
 def p_masrvector(t):
@@ -469,7 +469,7 @@ def p_iddssu(t):
     t[0]=AtributosStruct(t[1],     Tipo.NULO, True)
     
 def p_iddss(t):
-    'idss   : ID  DDP tipof'
+    'idss   : ID  DP tipof'
     #                    ID   ::  TIPO      bandera si puede cambiar tipo
     t[0]=AtributosStruct(t[1],     t[3],    False)
 
@@ -676,7 +676,7 @@ def p_elseIfList(t):
 
 #////////////////////////////////////////////////////////INSTRUCCION WHILE/////////////////////////////////////////////////////////////////
 def p_instr_while(t):
-    'instr_while    :   RWHILE expresion instrucciones REND  '
+    'instr_while    :   RWHILE expresion instrucciones '
                     #EXP  #INSTR
     t[0] = Mientras(t[2],  t[3],  t.lineno(1),buscar_columna(input, t.slice[1]))   
 #////////////////////////////////////////////////////////INSTRUCCION FOR/////////////////////////////////////////////////////////////////
@@ -725,7 +725,7 @@ def p_instr_func(t):
     t[0] = Funcion( t[2], [] , t[5]  ,t[6],    t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_tipo_o_no(t):
-    'opciontipo       : DDP tipof'
+    'opciontipo       : DP tipof'
     t[0]=t[2]
 
 def p_tipo_o_no_dos(t):
@@ -746,11 +746,11 @@ def p_param(t):
     t[0] = {'id':t[1],'tipo':Tipo.NULO,'vector':False}
 
 def p_param_tip(t):
-    'param          :   ID DDP tipof'
+    'param          :   ID DP tipof'
     t[0] = {'id':t[1],'tipo':t[3],'vector':False}
 
 def p_param_vec(t):
-    'param          :   ID DDP RVECTOR LLAVEA masrvector LLAVEC'
+    'param          :   ID DP RVECTOR LLAVEA masrvector LLAVEC'
     t[0] = {'id':t[1],'tipo':t[5],'vector':True}
 
 #////////////////////////////////////////////////////////INSTRUCCION LLAMADA/////////////////////////////////////////////////////////////////   
