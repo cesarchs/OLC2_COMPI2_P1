@@ -794,3 +794,189 @@ def p_instr_continue(t):
     'instr_continue :   RCONTINUE '
     t[0] = Continue(t.lineno(1),buscar_columna(input, t.slice[1]))
     
+
+    
+#//////////////////////////////////////////////////////EXPRESIONES/////////////////////////////////////////////////////////////////////////  
+    
+def p_expresion_binaria(t):
+    '''expresion      : expresion MAS expresion
+                      | expresion MENOS expresion
+                      | expresion POR expresion
+                      | expresion DIV expresion
+                      | expresion MOD expresion
+                      | expresion POTEN expresion
+                      | expresion MAYORQ expresion
+                      | expresion MENORQ expresion
+                      | expresion MAYORIGUALQ expresion
+                      | expresion MENORIGUALQ expresion
+                      | expresion DIFERENTE expresion
+                      | expresion IGUALDAD expresion
+                      | expresion OR expresion
+                      | expresion AND expresion                     
+                      '''
+    if t[2] == '+': 
+        t[0] = Aritmetica(OpsAritmetico.MAS,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '-': 
+        t[0] = Aritmetica(OpsAritmetico.MENOS,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    #elif t[2] == ':': 
+    #    t[0] = Aritmetica(OpsAritmetico.DP,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '*': 
+        t[0] = Aritmetica(OpsAritmetico.POR,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '/': 
+        t[0] = Aritmetica(OpsAritmetico.DIV,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '%': 
+        t[0] = Aritmetica(OpsAritmetico.MOD,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '**': 
+        t[0] = Aritmetica(OpsAritmetico.POT,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '>':
+        t[0] = Relacion(OpsRelacional.MAYORQ,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '<':
+        t[0] = Relacion(OpsRelacional.MENORQ,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '>=':
+        t[0] = Relacion(OpsRelacional.MAYORIGUALQ,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '<=':
+        t[0] = Relacion(OpsRelacional.MENORIGUALQ,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '!=':
+        t[0] = Relacion(OpsRelacional.DIFERENTE,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))
+    elif t[2] == '==':
+        t[0] = Relacion(OpsRelacional.IGUALQ,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2])) 
+    elif t[2] == 'or':
+        t[0] = Logica(OpsLogical.OR,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))   
+    elif t[2] == 'and':
+        t[0] = Logica(OpsLogical.AND,t[1],t[3],t.lineno(2),buscar_columna(input,t.slice[2]))  
+        
+        
+def p_expresion_unaria(t):
+    '''expresion      : MENOS expresion %prec UMENOS
+                      | NOT expresion %prec UNOT
+                      '''
+    if t[1] == '-': 
+        t[0] = Aritmetica(OpsAritmetico.UMENOS,t[2],None,t.lineno(1),buscar_columna(input,t.slice[1]))
+    elif t[1] == 'not':
+        t[0] = Logica(OpsLogical.NOT,t[2],None,t.lineno(1),buscar_columna(input,t.slice[1]))
+        
+
+        
+def p_expresion_grupo(t):
+    'expresion      : PARIZQ expresion PARDER'
+    t[0] = t[2]
+
+        
+def p_expresion_llam(t):
+    'expresion      : instr_llamada'
+    #print("si ando aqui")
+    t[0] = t[1]
+
+def p_expresion_parse(t):
+    'expresion      : RPARSEFN PARIZQ tipof COMA expresion PARDER'
+                      #tipo    #expr
+    t[0] =     Parse( t[3] ,   t[5] ,t.lineno(1),buscar_columna(input,t.slice[1]))
+
+def p_expresion_length(t):
+    'expresion      : RLENGTHFNA PARIZQ ID lista_corchetes PARDER'
+                         #ID  #EPX=[[]][]
+    t[0] = TamanoArreglo(t[3],  t[4],      t.lineno(1),buscar_columna(input,t.slice[1]))
+
+def p_expresion_lengthdo(t):
+    'expresion      : RLENGTHFNA PARIZQ ID PARDER'
+                         #ID  
+    t[0] = TamanoArregloS(t[3], t.lineno(1),buscar_columna(input,t.slice[1]))
+
+
+def p_expresion_logDiez(t):
+    #log10(exp)
+    'expresion      : RLOGT PARIZQ lexp PARDER '
+                             #exp
+    t[0]=      LogaritmoDiez(t[3],t.lineno(1),buscar_columna(input,t.slice[1]))
+
+def p_expresion_log(t):
+    #log10(exp)
+    'expresion      : RLOG PARIZQ lexp PARDER '
+                             #exp->base,valor
+    t[0]=        Logaritmoo(t[3],t.lineno(1),buscar_columna(input,t.slice[1]))
+
+
+def p_expresion_trunc_tipof(t):
+    'expresion      : RTRUNCFN PARIZQ tipof COMA expresion PARDER'
+                      #tipo    #expr
+    t[0] =     Trunc( t[3] ,   t[5] ,t.lineno(1),buscar_columna(input,t.slice[1]))
+
+def p_expresion_trunc(t):
+    'expresion      : RTRUNCFN PARIZQ expresion PARDER'
+                      #tipo    #expr
+    t[0] =     Trunc( None ,   t[3] ,t.lineno(1),buscar_columna(input,t.slice[1]))
+ 
+def p_expresion_floaatt(t):
+    'expresion      : RFLOATFN PARIZQ expresion PARDER'
+                      #tipo    #expr
+    t[0] =     Flooaat( None ,   t[3] ,t.lineno(1),buscar_columna(input,t.slice[1]))    
+
+def p_expresion_uppercase(t):
+    'expresion      : RUPPERCASEFN PARIZQ expresion PARDER'
+    t[0] =     Upper(t[3],t.lineno(1),buscar_columna(input,t.slice[1]))
+
+def p_expresion_lowecase(t):
+    'expresion      : RLOWERCASEFN PARIZQ expresion PARDER'
+    t[0] =     Lower(t[3],t.lineno(1),buscar_columna(input,t.slice[1]))
+
+
+def p_expresion_id(t):
+    'expresion  : ID'
+    #print("si ando aqui")
+    t[0] = Identificador(t[1],t.lineno(1),buscar_columna(input,t.slice[1]))    
+
+def p_expresion_entero(t):
+    'expresion      : ENTERO '
+    t[0]  = Primitivo(Tipo.ENTERO,t[1],t.lineno(1), buscar_columna(input,t.slice[1]))
+
+def p_expresion_decimal(t):
+    'expresion      : DECIMAL'
+    t[0] = Primitivo(Tipo.DECIMAL,t[1],t.lineno(1),buscar_columna(input,t.slice[1]))#slice es una funcion de py que devuelente un elemento o una serie de elementos especificados
+
+def p_expresion_cadena(t):
+    'expresion      : CADENA'
+    t[0] = Primitivo(Tipo.CADENA,str(t[1]).replace('\\n','\n'),t.lineno(1), buscar_columna(input, t.slice[1]))
+
+def p_expresion_caracter(t):
+    'expresion      : CARACTER'
+    t[0] = Primitivo(Tipo.CARACTER,str(t[1]),t.lineno(1), buscar_columna(input, t.slice[1]))
+
+def p_expresion_booleano_true(t):
+    'expresion      : RTRUE'
+    t[0] = Primitivo(Tipo.BOOLEANO,True,t.lineno(1), buscar_columna(input, t.slice[1]))
+
+def p_expresion_booleano_false(t):
+    'expresion      : RFALSE'
+    t[0] = Primitivo(Tipo.BOOLEANO,False,t.lineno(1), buscar_columna(input,t.slice[1]))
+
+def p_expresion_nothing_false(t):
+    'expresion      : RNOTHING'
+    t[0] = Primitivo(Tipo.NULO,None,t.lineno(1), buscar_columna(input,t.slice[1]))
+def p_expresion_acceso_array(t):
+    ' expresion     : ID lista_corchetes '
+    t[0] = AccesoArreglo(t[1],t[2], t.lineno(1), buscar_columna(input,t.slice[1]))
+
+def p_expresion_accesoarraydos(t):
+    ' expresion     : ID begin_end '
+    t[0] = AccesoArregloBE(t[1],t[2], t.lineno(1), buscar_columna(input,t.slice[1]))
+
+def p_expresion_accesarStruct(t):
+    ' expresion     : ID POINT atributospoint'
+    t[0] = AccesoStruct(t[1],t[3], t.lineno(1), buscar_columna(input,t.slice[1]))
+
+    
+
+
+    
+
+
+
+#FIN SINTACTICO 
+
+import ply.yacc as yacc
+#import ply.yacc as yacc
+parser = yacc.yacc()
+input = ''
+
+def getErrores():
+    return ListaErrores
