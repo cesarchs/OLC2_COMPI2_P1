@@ -3,15 +3,15 @@ function imprimirInicial()
         
         while (index != 12)
             index = index + 1;
-            if (index == 0 || index == 1 || index == 11 || index == 12) 
+            if (index == 0 or index == 1 or index == 11 or index == 12) 
                 println("*********************************************************************************************************");
             elseif (index == 2) 
                 println("*****    ****************    ******                 ******                 *****              **********");
-            elseif (index >= 3 && index <= 5) 
+            elseif (index >= 3 and index <= 5) 
                 println("*****    ****************    ******    *******************                 *****  **********************");
             elseif (index == 6) 
                 println("*****    ****************    ******                 ******   **********    *****  **********************");
-            elseif (index >= 7 && index <= 9) 
+            elseif (index >= 7 and index <= 9) 
                 println("*****    ****************    *******************    ******                 *****  **********************");
             elseif (index == 10) 
                 println("*****                        ******                 ******                 *****              **********");
