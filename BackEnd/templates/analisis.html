@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+{% block title %}PyToPy CODE{% endblock %}
+
+{% block content %}
+<nav>
+    <div class="nav nav-pills nav-dark bg-dark " id="nav-tab" role="tablist">
+        <button class="nav-link active text-white" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+            type="button" role="tab" aria-controls="nav-home" aria-selected="true">Analisis</button>
+        <button class="nav-link text-white" id="nav-mirilla-tab" data-bs-toggle="tab" data-bs-target="#nav-mirilla"
+            type="button" role="tab" aria-controls="nav-mirilla" aria-selected="false">Optimizacion Mirilla</button>
+            <button class="nav-link text-white" id="nav-bloques-tab" data-bs-toggle="tab" data-bs-target="#nav-bloques"
+            type="button" role="tab" aria-controls="nav-bloques" aria-selected="false">Optimizacion Bloques</button>
+        <button class="nav-link text-white" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Tabla Simbolos</button>
+        <button class="nav-link text-white" id="nav-errores-tab" data-bs-toggle="tab" data-bs-target="#nav-errores"
+            type="button" role="tab" aria-controls="nav-errores" aria-selected="false">Errores</button>
+        <button class="nav-link text-white" id="nav-arbol-tab" data-bs-toggle="tab" data-bs-target="#nav-arbol"
+            type="button" role="tab" aria-controls="nav-arbol" aria-selected="false">Arbol</button>
+        <button class="nav-link text-white" id="nav-dot-tab" data-bs-toggle="tab" data-bs-target="#nav-dot"
+            type="button" role="tab" aria-controls="nav-dot" aria-selected="false">Dot</button>
+        <button class="nav-link text-white" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Informacion</button>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <!-- analisis tab -->
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <main role="main" class="contr  p-2 border">
+                        <h2>Entrada</h2>
+                        <form action="" method="POST">
+                            <div class="d-grid gap-2 d-md-block">
+                                <button type="submit" class="btn btn-outline-success btn-lg" value="ejecutar"
+                                    name="ejecutar">ANALIZAR</button>
+                                <button type="submit" class="btn btn-outline-secondary btn-lg" value="limpiar"
+                                    name="limpiar">LIMPIAR</button>
+                            </div>
+                            <div>
+                                <textarea class="codemirror-textarea form-control" name="inpt" id="default" cols="30"
+                                    rows="10">{{initial}}</textarea>
+                            </div>
+                        </form>
+                    </main>
+                </div>
+                <div class="col">
+                    <main role="main" class="container p-2 border">
+                        <h2>C3D Golang</h2>
+                        <div class="city">
+                            <form action="" method="POST">
+                                <div class="d-grid gap-2 d-md-block">
+                                    <button type="submit" class="btn btn-outline-info btn-lg" value="mirilla"
+                                        name="mirilla">Op. Mirilla</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-lg" value="bloques"
+                                        name="bloques">Op. Bloques</button>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="codemirror-textarea form-control" name="c3dinp" id="console"
+                                        cols="80" rows="10">{{regres}}</textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <main role="main" class="contr p-2 border">
+                        <h2>Optimizacion Mirilla</h2>
+                        <form action="" method="POST">
+                            <div>
+                                <textarea class="codemirror-textarea form-control" name="optim" id="optim"
+                                    cols="30" rows="10">{{c3dopt}}</textarea>
+                            </div>
+                        </form>
+                    </main>
+                </div>
+                <div class="col">
+                    <main role="main" class="container p-2 border">
+                        <h2>Optimizacion Bloques</h2>
+                        <div class="city">
+                            <form action="" method="POST">
+                                <div class="mb-3">
+                                    <textarea class="codemirror-textarea form-control" name="optimb" id="optimb"
+                                        cols="80" rows="10">{{c3doptb}}</textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REPORTE MIRILLA TAB -->
+    <div class="tab-pane fade" id="nav-mirilla" role="tabpanel" aria-labelledby="nav-mirilla-tab">
+        <div class="city2">
+            <div class="table-responsive">
+                <h3>REPORTE DE OPTIMIZACION MIRILLA</h3>
+                <table class="table table-bordered table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:6%">REGLA</th>
+                            <th class="col-md-4">EXPRESION ORIGINAL</th>
+                            <th class="col-md-4">EXPRESION OPTIMIZADA</th>
+                            <th style="width:5%" class="text-center">FIL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for op in opts %}
+                        <tr>
+                            <td style="width:6%">{{ op.regla }}</td>
+                            <td class="col-md-4">{{ op.ExpOr }}</td>
+                            <td class="col-md-4">{{ op.ExpOp }}</td>
+                            <td style="width:5%" class="text-center">{{ op.fil}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- REPORTE BLOQUES TAB -->
+    <div class="tab-pane fade" id="nav-bloques" role="tabpanel" aria-labelledby="nav-bloques-tab">
+        <div class="city2">
+            <div class="table-responsive">
+                <h3>REPORTE DE OPTIMIZACION POR BLOQUES</h3>
+                <table class="table table-bordered table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:6%">REGLA</th>
+                            <th class="col-md-4">EXPRESION ORIGINAL</th>
+                            <th class="col-md-4">EXPRESION OPTIMIZADA</th>
+                            <th style="width:5%" class="text-center">FIL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for op in optsb %}
+                        <tr>
+                            <td style="width:6%">{{ op.regla }}</td>
+                            <td class="col-md-4">{{ op.ExpOr }}</td>
+                            <td class="col-md-4">{{ op.ExpOp }}</td>
+                            <td style="width:5%" class="text-center">{{ op.fil}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- simbolos tab -->
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="city2">
+            <div class="table-responsive">
+                <h3>TABLA DE SIMBOLOS</h3>
+                <table class="table table-bordered table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:3%" class="text-center">#</th>
+                            <th style="width:10%">ID</th>
+                            <th style="width:10%">TIPO</th>
+                            <th style="width:8%">AMBITO</th>
+                            <th class="col-md-2">PARAMETROS</th>
+                            <th class="col-md-2">POSICION</th>
+                            <th style="width:4%" class="text-center">FIL</th>
+                            <th style="width:4%" class="text-center">COL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td style="width:3%" class="text-center">{{ user.no }}</td>
+                            <td style="width:10%">{{ user.id       }}</td>
+                            <td style="width:10%">{{ user.tipo     }}</td>
+                            <td style="width:8%"> {{ user.ambito   }}</td>
+                            <td class="col-md-2"> {{ user.params   }}</td>
+                            <td class="col-md-2"> {{ user.posicion }}</td>
+                            <td style="width:4%" class="text-center">{{ user.fil}}</td>
+                            <td style="width:4%" class="text-center">{{ user.col}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Errores tab -->
+    <div class="tab-pane fade" id="nav-errores" role="tabpanel" aria-labelledby="nav-errores-tab">
+        <div class="city2">
+            <div class="table-responsive">
+                <h3>TABLA DE ERRORES</h3>
+                <table class="table table-bordered table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col">#</th>
+                            <th class="col">TIPO</th>
+                            <th class="col">DESCRIPCION</th>
+                            <th class="col">FILA</th>
+                            <th class="col">COLUMNA</th>
+                            <th class="col">FECHA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for error in errors %}
+                        <tr>
+                            <td class="col">{{ error.no }}</td>
+                            <td class="col">{{ error.tipo }}</td>
+                            <td class="col">{{ error.des }}</td>
+                            <td class="col">{{ error.fil }}</td>
+                            <td class="col">{{ error.col }}</td>
+                            <td class="col">{{ error.fecha }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- informaacion tab -->
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <main role="main" class="container p-5">
+            <div class="p-5 bg-light border  rounded-3">
+                <h1>PyToPy</h1>
+                <p>
+                    PyToPy, un lenguaje de programación basado en PYTHON que esta orientado.
+                </p>
+                <p>
+                    Realizado por:
+                </p>
+                <small class="text-primary">201700634 - CESAR LEONEL CHAMALE SICAN - A</small>
+                <p><small class="text-muted">Estudiante de Ingenieria en Sistemas</small></p>
+
+            </div>
+        </main>
+    </div>
+    <!-- arbol tab -->
+    <div class="tab-pane fade" id="nav-arbol" role="tabpanel" aria-labelledby="nav-contact-arbol">
+        <html>
+
+        <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        </head>
+
+        <body>
+            <script src="//d3js.org/d3.v5.min.js"></script>
+            <script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+            <script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+            <div id="graph" style="text-align: center;"></div>
+            <script>
+                var bot = '{{ hola|tojson }}';
+                h = bot.substring(1, bot.length - 1);
+                // console.log(h)
+                d3.select("#graph").graphviz()
+                    .renderDot(h)
+                    .height('1000')
+                    .width('1600');
+            </script>
+        </body>
+
+        </html>
+    </div>
+    <!-- dot arbol -->
+    <div class="tab-pane fade" id="nav-dot" role="tabpanel" aria-labelledby="nav-dot-tab">
+        <main role="main" class="container p-5">
+            <form>
+                <div class="mb-3">
+                    <label for="output" class="form-label">SALIDA:</label>
+                    <textarea class="form-control" id="output" name="output" cols="30" rows="10"
+                        readonly>{{dotcode}}</textarea>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+
+
+{% endblock %}

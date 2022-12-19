@@ -1,0 +1,1574 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList
+Rule 2     start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+Rule 3     declarations -> declarations declaration
+Rule 4     declarations -> declaration
+Rule 5     declaration -> VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+Rule 6     declaration -> VAR idList type SEMICOLON
+Rule 7     type -> INT
+Rule 8     type -> FLOAT64
+Rule 9     idList -> idList COMMA ID
+Rule 10    idList -> ID
+Rule 11    codeList -> codeList code
+Rule 12    codeList -> code
+Rule 13    code -> FUNC ID LEPAR RIPAR statement
+Rule 14    statement -> LEKEY instructions RIKEY
+Rule 15    instructions -> instructions instruction
+Rule 16    instructions -> instruction
+Rule 17    instruction -> assign SEMICOLON
+Rule 18    instruction -> print SEMICOLON
+Rule 19    instruction -> if
+Rule 20    instruction -> gotoSt SEMICOLON
+Rule 21    instruction -> label
+Rule 22    instruction -> callFunc SEMICOLON
+Rule 23    instruction -> retSt SEMICOLON
+Rule 24    retSt -> RETURN
+Rule 25    callFunc -> ID LEPAR RIPAR
+Rule 26    label -> ID COLON
+Rule 27    gotoSt -> GOTO ID
+Rule 28    if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY
+Rule 29    assign -> access EQUALS finalExp
+Rule 30    assign -> ID EQUALS expression
+Rule 31    assign -> ID EQUALS MODULAR
+Rule 32    assign -> ID EQUALS access
+Rule 33    MODULAR -> MATH POINT MOD LEPAR finalExp COMMA finalExp RIPAR
+Rule 34    print -> FMT POINT PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR
+Rule 35    printValue -> INT LEPAR finalExp RIPAR
+Rule 36    printValue -> finalExp
+Rule 37    expression -> finalExp PLUS finalExp
+Rule 38    expression -> finalExp MINUS finalExp
+Rule 39    expression -> finalExp TIMES finalExp
+Rule 40    expression -> finalExp DIV finalExp
+Rule 41    expression -> finalExp GREATER finalExp
+Rule 42    expression -> finalExp LESS finalExp
+Rule 43    expression -> finalExp GREATEREQUAL finalExp
+Rule 44    expression -> finalExp LESSEQUAL finalExp
+Rule 45    expression -> finalExp EQUALSEQUALS finalExp
+Rule 46    expression -> finalExp DISTINT finalExp
+Rule 47    expression -> finalExp
+Rule 48    finalExp -> ID
+Rule 49    finalExp -> INTLITERAL
+Rule 50    finalExp -> MINUS INTLITERAL
+Rule 51    finalExp -> FLOATLITERAL
+Rule 52    access -> ID LECOR INT LEPAR finalExp RIPAR RICOR
+Rule 53    access -> ID LECOR finalExp RICOR
+
+Terminals, with rules where they appear
+
+COLON                : 26
+COMMA                : 9 33 34
+DISTINT              : 46
+DIV                  : 40
+EQUALS               : 29 30 31 32
+EQUALSEQUALS         : 45
+FLOAT64              : 5 8
+FLOATLITERAL         : 51
+FMT                  : 34
+FUNC                 : 13
+GOTO                 : 27 28
+GREATER              : 41
+GREATEREQUAL         : 43
+ID                   : 1 2 9 10 13 25 26 27 28 30 31 32 48 52 53
+IF                   : 28
+IMPORT               : 1 2
+INT                  : 7 35 52
+INTLITERAL           : 5 49 50
+LECOR                : 5 52 53
+LEKEY                : 14 28
+LEPAR                : 1 2 13 25 33 34 35 52
+LESS                 : 42
+LESSEQUAL            : 44
+MATH                 : 33
+MINUS                : 38 50
+MOD                  : 33
+PACKAGE              : 1 2
+PLUS                 : 37
+POINT                : 33 34
+PRINTF               : 34
+RETURN               : 24
+RICOR                : 5 52 53
+RIKEY                : 14 28
+RIPAR                : 1 2 13 25 33 34 35 52
+SEMICOLON            : 1 1 2 2 2 5 6 17 18 20 22 23 28
+STRINGLITERAL        : 1 2 2 34
+TIMES                : 39
+VAR                  : 5 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+MODULAR              : 31
+access               : 29 32
+assign               : 17
+callFunc             : 22
+code                 : 11 12
+codeList             : 1 2 11
+declaration          : 3 4
+declarations         : 1 2 3
+expression           : 28 30
+finalExp             : 29 33 33 35 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 44 45 45 46 46 47 52 53
+gotoSt               : 20
+idList               : 5 6 9
+if                   : 19
+instruction          : 15 16
+instructions         : 14 15
+label                : 21
+print                : 18
+printValue           : 34
+retSt                : 23
+start                : 0
+statement            : 13
+type                 : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start
+    (1) start -> . PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList
+    (2) start -> . PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    PACKAGE         shift and go to state 2
+
+    start                          shift and go to state 1
+
+state 1
+
+    (0) S' -> start .
+
+
+
+state 2
+
+    (1) start -> PACKAGE . ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList
+    (2) start -> PACKAGE . ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) start -> PACKAGE ID . SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList
+    (2) start -> PACKAGE ID . SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    SEMICOLON       shift and go to state 4
+
+
+state 4
+
+    (1) start -> PACKAGE ID SEMICOLON . IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList
+    (2) start -> PACKAGE ID SEMICOLON . IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    IMPORT          shift and go to state 5
+
+
+state 5
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT . LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList
+    (2) start -> PACKAGE ID SEMICOLON IMPORT . LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    LEPAR           shift and go to state 6
+
+
+state 6
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT LEPAR . STRINGLITERAL RIPAR SEMICOLON declarations codeList
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR . STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    STRINGLITERAL   shift and go to state 7
+
+
+state 7
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL . RIPAR SEMICOLON declarations codeList
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL . SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    RIPAR           shift and go to state 9
+    SEMICOLON       shift and go to state 8
+
+
+state 8
+
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON . STRINGLITERAL RIPAR SEMICOLON declarations codeList
+
+    STRINGLITERAL   shift and go to state 10
+
+
+state 9
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR . SEMICOLON declarations codeList
+
+    SEMICOLON       shift and go to state 11
+
+
+state 10
+
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL . RIPAR SEMICOLON declarations codeList
+
+    RIPAR           shift and go to state 12
+
+
+state 11
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON . declarations codeList
+    (3) declarations -> . declarations declaration
+    (4) declarations -> . declaration
+    (5) declaration -> . VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+    (6) declaration -> . VAR idList type SEMICOLON
+
+    VAR             shift and go to state 15
+
+    declarations                   shift and go to state 13
+    declaration                    shift and go to state 14
+
+state 12
+
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR . SEMICOLON declarations codeList
+
+    SEMICOLON       shift and go to state 16
+
+
+state 13
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations . codeList
+    (3) declarations -> declarations . declaration
+    (11) codeList -> . codeList code
+    (12) codeList -> . code
+    (5) declaration -> . VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+    (6) declaration -> . VAR idList type SEMICOLON
+    (13) code -> . FUNC ID LEPAR RIPAR statement
+
+    VAR             shift and go to state 15
+    FUNC            shift and go to state 20
+
+    codeList                       shift and go to state 17
+    declaration                    shift and go to state 18
+    code                           shift and go to state 19
+
+state 14
+
+    (4) declarations -> declaration .
+
+    VAR             reduce using rule 4 (declarations -> declaration .)
+    FUNC            reduce using rule 4 (declarations -> declaration .)
+
+
+state 15
+
+    (5) declaration -> VAR . idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+    (6) declaration -> VAR . idList type SEMICOLON
+    (9) idList -> . idList COMMA ID
+    (10) idList -> . ID
+
+    ID              shift and go to state 22
+
+    idList                         shift and go to state 21
+
+state 16
+
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON . declarations codeList
+    (3) declarations -> . declarations declaration
+    (4) declarations -> . declaration
+    (5) declaration -> . VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+    (6) declaration -> . VAR idList type SEMICOLON
+
+    VAR             shift and go to state 15
+
+    declarations                   shift and go to state 23
+    declaration                    shift and go to state 14
+
+state 17
+
+    (1) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList .
+    (11) codeList -> codeList . code
+    (13) code -> . FUNC ID LEPAR RIPAR statement
+
+    $end            reduce using rule 1 (start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR SEMICOLON declarations codeList .)
+    FUNC            shift and go to state 20
+
+    code                           shift and go to state 24
+
+state 18
+
+    (3) declarations -> declarations declaration .
+
+    VAR             reduce using rule 3 (declarations -> declarations declaration .)
+    FUNC            reduce using rule 3 (declarations -> declarations declaration .)
+
+
+state 19
+
+    (12) codeList -> code .
+
+    FUNC            reduce using rule 12 (codeList -> code .)
+    $end            reduce using rule 12 (codeList -> code .)
+
+
+state 20
+
+    (13) code -> FUNC . ID LEPAR RIPAR statement
+
+    ID              shift and go to state 25
+
+
+state 21
+
+    (5) declaration -> VAR idList . LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+    (6) declaration -> VAR idList . type SEMICOLON
+    (9) idList -> idList . COMMA ID
+    (7) type -> . INT
+    (8) type -> . FLOAT64
+
+    LECOR           shift and go to state 26
+    COMMA           shift and go to state 29
+    INT             shift and go to state 30
+    FLOAT64         shift and go to state 27
+
+    type                           shift and go to state 28
+
+state 22
+
+    (10) idList -> ID .
+
+    LECOR           reduce using rule 10 (idList -> ID .)
+    COMMA           reduce using rule 10 (idList -> ID .)
+    INT             reduce using rule 10 (idList -> ID .)
+    FLOAT64         reduce using rule 10 (idList -> ID .)
+
+
+state 23
+
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations . codeList
+    (3) declarations -> declarations . declaration
+    (11) codeList -> . codeList code
+    (12) codeList -> . code
+    (5) declaration -> . VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON
+    (6) declaration -> . VAR idList type SEMICOLON
+    (13) code -> . FUNC ID LEPAR RIPAR statement
+
+    VAR             shift and go to state 15
+    FUNC            shift and go to state 20
+
+    codeList                       shift and go to state 31
+    declaration                    shift and go to state 18
+    code                           shift and go to state 19
+
+state 24
+
+    (11) codeList -> codeList code .
+
+    FUNC            reduce using rule 11 (codeList -> codeList code .)
+    $end            reduce using rule 11 (codeList -> codeList code .)
+
+
+state 25
+
+    (13) code -> FUNC ID . LEPAR RIPAR statement
+
+    LEPAR           shift and go to state 32
+
+
+state 26
+
+    (5) declaration -> VAR idList LECOR . INTLITERAL RICOR FLOAT64 SEMICOLON
+
+    INTLITERAL      shift and go to state 33
+
+
+state 27
+
+    (8) type -> FLOAT64 .
+
+    SEMICOLON       reduce using rule 8 (type -> FLOAT64 .)
+
+
+state 28
+
+    (6) declaration -> VAR idList type . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+
+state 29
+
+    (9) idList -> idList COMMA . ID
+
+    ID              shift and go to state 35
+
+
+state 30
+
+    (7) type -> INT .
+
+    SEMICOLON       reduce using rule 7 (type -> INT .)
+
+
+state 31
+
+    (2) start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList .
+    (11) codeList -> codeList . code
+    (13) code -> . FUNC ID LEPAR RIPAR statement
+
+    $end            reduce using rule 2 (start -> PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL SEMICOLON STRINGLITERAL RIPAR SEMICOLON declarations codeList .)
+    FUNC            shift and go to state 20
+
+    code                           shift and go to state 24
+
+state 32
+
+    (13) code -> FUNC ID LEPAR . RIPAR statement
+
+    RIPAR           shift and go to state 36
+
+
+state 33
+
+    (5) declaration -> VAR idList LECOR INTLITERAL . RICOR FLOAT64 SEMICOLON
+
+    RICOR           shift and go to state 37
+
+
+state 34
+
+    (6) declaration -> VAR idList type SEMICOLON .
+
+    VAR             reduce using rule 6 (declaration -> VAR idList type SEMICOLON .)
+    FUNC            reduce using rule 6 (declaration -> VAR idList type SEMICOLON .)
+
+
+state 35
+
+    (9) idList -> idList COMMA ID .
+
+    LECOR           reduce using rule 9 (idList -> idList COMMA ID .)
+    COMMA           reduce using rule 9 (idList -> idList COMMA ID .)
+    INT             reduce using rule 9 (idList -> idList COMMA ID .)
+    FLOAT64         reduce using rule 9 (idList -> idList COMMA ID .)
+
+
+state 36
+
+    (13) code -> FUNC ID LEPAR RIPAR . statement
+    (14) statement -> . LEKEY instructions RIKEY
+
+    LEKEY           shift and go to state 39
+
+    statement                      shift and go to state 38
+
+state 37
+
+    (5) declaration -> VAR idList LECOR INTLITERAL RICOR . FLOAT64 SEMICOLON
+
+    FLOAT64         shift and go to state 40
+
+
+state 38
+
+    (13) code -> FUNC ID LEPAR RIPAR statement .
+
+    FUNC            reduce using rule 13 (code -> FUNC ID LEPAR RIPAR statement .)
+    $end            reduce using rule 13 (code -> FUNC ID LEPAR RIPAR statement .)
+
+
+state 39
+
+    (14) statement -> LEKEY . instructions RIKEY
+    (15) instructions -> . instructions instruction
+    (16) instructions -> . instruction
+    (17) instruction -> . assign SEMICOLON
+    (18) instruction -> . print SEMICOLON
+    (19) instruction -> . if
+    (20) instruction -> . gotoSt SEMICOLON
+    (21) instruction -> . label
+    (22) instruction -> . callFunc SEMICOLON
+    (23) instruction -> . retSt SEMICOLON
+    (29) assign -> . access EQUALS finalExp
+    (30) assign -> . ID EQUALS expression
+    (31) assign -> . ID EQUALS MODULAR
+    (32) assign -> . ID EQUALS access
+    (34) print -> . FMT POINT PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR
+    (28) if -> . IF expression LEKEY GOTO ID SEMICOLON RIKEY
+    (27) gotoSt -> . GOTO ID
+    (26) label -> . ID COLON
+    (25) callFunc -> . ID LEPAR RIPAR
+    (24) retSt -> . RETURN
+    (52) access -> . ID LECOR INT LEPAR finalExp RIPAR RICOR
+    (53) access -> . ID LECOR finalExp RICOR
+
+    ID              shift and go to state 51
+    FMT             shift and go to state 52
+    IF              shift and go to state 53
+    GOTO            shift and go to state 54
+    RETURN          shift and go to state 55
+
+    instructions                   shift and go to state 41
+    instruction                    shift and go to state 42
+    assign                         shift and go to state 43
+    print                          shift and go to state 44
+    if                             shift and go to state 45
+    gotoSt                         shift and go to state 46
+    label                          shift and go to state 47
+    callFunc                       shift and go to state 48
+    retSt                          shift and go to state 49
+    access                         shift and go to state 50
+
+state 40
+
+    (5) declaration -> VAR idList LECOR INTLITERAL RICOR FLOAT64 . SEMICOLON
+
+    SEMICOLON       shift and go to state 56
+
+
+state 41
+
+    (14) statement -> LEKEY instructions . RIKEY
+    (15) instructions -> instructions . instruction
+    (17) instruction -> . assign SEMICOLON
+    (18) instruction -> . print SEMICOLON
+    (19) instruction -> . if
+    (20) instruction -> . gotoSt SEMICOLON
+    (21) instruction -> . label
+    (22) instruction -> . callFunc SEMICOLON
+    (23) instruction -> . retSt SEMICOLON
+    (29) assign -> . access EQUALS finalExp
+    (30) assign -> . ID EQUALS expression
+    (31) assign -> . ID EQUALS MODULAR
+    (32) assign -> . ID EQUALS access
+    (34) print -> . FMT POINT PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR
+    (28) if -> . IF expression LEKEY GOTO ID SEMICOLON RIKEY
+    (27) gotoSt -> . GOTO ID
+    (26) label -> . ID COLON
+    (25) callFunc -> . ID LEPAR RIPAR
+    (24) retSt -> . RETURN
+    (52) access -> . ID LECOR INT LEPAR finalExp RIPAR RICOR
+    (53) access -> . ID LECOR finalExp RICOR
+
+    RIKEY           shift and go to state 57
+    ID              shift and go to state 51
+    FMT             shift and go to state 52
+    IF              shift and go to state 53
+    GOTO            shift and go to state 54
+    RETURN          shift and go to state 55
+
+    instruction                    shift and go to state 58
+    assign                         shift and go to state 43
+    print                          shift and go to state 44
+    if                             shift and go to state 45
+    gotoSt                         shift and go to state 46
+    label                          shift and go to state 47
+    callFunc                       shift and go to state 48
+    retSt                          shift and go to state 49
+    access                         shift and go to state 50
+
+state 42
+
+    (16) instructions -> instruction .
+
+    RIKEY           reduce using rule 16 (instructions -> instruction .)
+    ID              reduce using rule 16 (instructions -> instruction .)
+    FMT             reduce using rule 16 (instructions -> instruction .)
+    IF              reduce using rule 16 (instructions -> instruction .)
+    GOTO            reduce using rule 16 (instructions -> instruction .)
+    RETURN          reduce using rule 16 (instructions -> instruction .)
+
+
+state 43
+
+    (17) instruction -> assign . SEMICOLON
+
+    SEMICOLON       shift and go to state 59
+
+
+state 44
+
+    (18) instruction -> print . SEMICOLON
+
+    SEMICOLON       shift and go to state 60
+
+
+state 45
+
+    (19) instruction -> if .
+
+    RIKEY           reduce using rule 19 (instruction -> if .)
+    ID              reduce using rule 19 (instruction -> if .)
+    FMT             reduce using rule 19 (instruction -> if .)
+    IF              reduce using rule 19 (instruction -> if .)
+    GOTO            reduce using rule 19 (instruction -> if .)
+    RETURN          reduce using rule 19 (instruction -> if .)
+
+
+state 46
+
+    (20) instruction -> gotoSt . SEMICOLON
+
+    SEMICOLON       shift and go to state 61
+
+
+state 47
+
+    (21) instruction -> label .
+
+    RIKEY           reduce using rule 21 (instruction -> label .)
+    ID              reduce using rule 21 (instruction -> label .)
+    FMT             reduce using rule 21 (instruction -> label .)
+    IF              reduce using rule 21 (instruction -> label .)
+    GOTO            reduce using rule 21 (instruction -> label .)
+    RETURN          reduce using rule 21 (instruction -> label .)
+
+
+state 48
+
+    (22) instruction -> callFunc . SEMICOLON
+
+    SEMICOLON       shift and go to state 62
+
+
+state 49
+
+    (23) instruction -> retSt . SEMICOLON
+
+    SEMICOLON       shift and go to state 63
+
+
+state 50
+
+    (29) assign -> access . EQUALS finalExp
+
+    EQUALS          shift and go to state 64
+
+
+state 51
+
+    (30) assign -> ID . EQUALS expression
+    (31) assign -> ID . EQUALS MODULAR
+    (32) assign -> ID . EQUALS access
+    (26) label -> ID . COLON
+    (25) callFunc -> ID . LEPAR RIPAR
+    (52) access -> ID . LECOR INT LEPAR finalExp RIPAR RICOR
+    (53) access -> ID . LECOR finalExp RICOR
+
+    EQUALS          shift and go to state 65
+    COLON           shift and go to state 66
+    LEPAR           shift and go to state 67
+    LECOR           shift and go to state 68
+
+
+state 52
+
+    (34) print -> FMT . POINT PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR
+
+    POINT           shift and go to state 69
+
+
+state 53
+
+    (28) if -> IF . expression LEKEY GOTO ID SEMICOLON RIKEY
+    (37) expression -> . finalExp PLUS finalExp
+    (38) expression -> . finalExp MINUS finalExp
+    (39) expression -> . finalExp TIMES finalExp
+    (40) expression -> . finalExp DIV finalExp
+    (41) expression -> . finalExp GREATER finalExp
+    (42) expression -> . finalExp LESS finalExp
+    (43) expression -> . finalExp GREATEREQUAL finalExp
+    (44) expression -> . finalExp LESSEQUAL finalExp
+    (45) expression -> . finalExp EQUALSEQUALS finalExp
+    (46) expression -> . finalExp DISTINT finalExp
+    (47) expression -> . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    expression                     shift and go to state 70
+    finalExp                       shift and go to state 72
+
+state 54
+
+    (27) gotoSt -> GOTO . ID
+
+    ID              shift and go to state 76
+
+
+state 55
+
+    (24) retSt -> RETURN .
+
+    SEMICOLON       reduce using rule 24 (retSt -> RETURN .)
+
+
+state 56
+
+    (5) declaration -> VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON .
+
+    VAR             reduce using rule 5 (declaration -> VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON .)
+    FUNC            reduce using rule 5 (declaration -> VAR idList LECOR INTLITERAL RICOR FLOAT64 SEMICOLON .)
+
+
+state 57
+
+    (14) statement -> LEKEY instructions RIKEY .
+
+    FUNC            reduce using rule 14 (statement -> LEKEY instructions RIKEY .)
+    $end            reduce using rule 14 (statement -> LEKEY instructions RIKEY .)
+
+
+state 58
+
+    (15) instructions -> instructions instruction .
+
+    RIKEY           reduce using rule 15 (instructions -> instructions instruction .)
+    ID              reduce using rule 15 (instructions -> instructions instruction .)
+    FMT             reduce using rule 15 (instructions -> instructions instruction .)
+    IF              reduce using rule 15 (instructions -> instructions instruction .)
+    GOTO            reduce using rule 15 (instructions -> instructions instruction .)
+    RETURN          reduce using rule 15 (instructions -> instructions instruction .)
+
+
+state 59
+
+    (17) instruction -> assign SEMICOLON .
+
+    RIKEY           reduce using rule 17 (instruction -> assign SEMICOLON .)
+    ID              reduce using rule 17 (instruction -> assign SEMICOLON .)
+    FMT             reduce using rule 17 (instruction -> assign SEMICOLON .)
+    IF              reduce using rule 17 (instruction -> assign SEMICOLON .)
+    GOTO            reduce using rule 17 (instruction -> assign SEMICOLON .)
+    RETURN          reduce using rule 17 (instruction -> assign SEMICOLON .)
+
+
+state 60
+
+    (18) instruction -> print SEMICOLON .
+
+    RIKEY           reduce using rule 18 (instruction -> print SEMICOLON .)
+    ID              reduce using rule 18 (instruction -> print SEMICOLON .)
+    FMT             reduce using rule 18 (instruction -> print SEMICOLON .)
+    IF              reduce using rule 18 (instruction -> print SEMICOLON .)
+    GOTO            reduce using rule 18 (instruction -> print SEMICOLON .)
+    RETURN          reduce using rule 18 (instruction -> print SEMICOLON .)
+
+
+state 61
+
+    (20) instruction -> gotoSt SEMICOLON .
+
+    RIKEY           reduce using rule 20 (instruction -> gotoSt SEMICOLON .)
+    ID              reduce using rule 20 (instruction -> gotoSt SEMICOLON .)
+    FMT             reduce using rule 20 (instruction -> gotoSt SEMICOLON .)
+    IF              reduce using rule 20 (instruction -> gotoSt SEMICOLON .)
+    GOTO            reduce using rule 20 (instruction -> gotoSt SEMICOLON .)
+    RETURN          reduce using rule 20 (instruction -> gotoSt SEMICOLON .)
+
+
+state 62
+
+    (22) instruction -> callFunc SEMICOLON .
+
+    RIKEY           reduce using rule 22 (instruction -> callFunc SEMICOLON .)
+    ID              reduce using rule 22 (instruction -> callFunc SEMICOLON .)
+    FMT             reduce using rule 22 (instruction -> callFunc SEMICOLON .)
+    IF              reduce using rule 22 (instruction -> callFunc SEMICOLON .)
+    GOTO            reduce using rule 22 (instruction -> callFunc SEMICOLON .)
+    RETURN          reduce using rule 22 (instruction -> callFunc SEMICOLON .)
+
+
+state 63
+
+    (23) instruction -> retSt SEMICOLON .
+
+    RIKEY           reduce using rule 23 (instruction -> retSt SEMICOLON .)
+    ID              reduce using rule 23 (instruction -> retSt SEMICOLON .)
+    FMT             reduce using rule 23 (instruction -> retSt SEMICOLON .)
+    IF              reduce using rule 23 (instruction -> retSt SEMICOLON .)
+    GOTO            reduce using rule 23 (instruction -> retSt SEMICOLON .)
+    RETURN          reduce using rule 23 (instruction -> retSt SEMICOLON .)
+
+
+state 64
+
+    (29) assign -> access EQUALS . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 77
+
+state 65
+
+    (30) assign -> ID EQUALS . expression
+    (31) assign -> ID EQUALS . MODULAR
+    (32) assign -> ID EQUALS . access
+    (37) expression -> . finalExp PLUS finalExp
+    (38) expression -> . finalExp MINUS finalExp
+    (39) expression -> . finalExp TIMES finalExp
+    (40) expression -> . finalExp DIV finalExp
+    (41) expression -> . finalExp GREATER finalExp
+    (42) expression -> . finalExp LESS finalExp
+    (43) expression -> . finalExp GREATEREQUAL finalExp
+    (44) expression -> . finalExp LESSEQUAL finalExp
+    (45) expression -> . finalExp EQUALSEQUALS finalExp
+    (46) expression -> . finalExp DISTINT finalExp
+    (47) expression -> . finalExp
+    (33) MODULAR -> . MATH POINT MOD LEPAR finalExp COMMA finalExp RIPAR
+    (52) access -> . ID LECOR INT LEPAR finalExp RIPAR RICOR
+    (53) access -> . ID LECOR finalExp RICOR
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    MATH            shift and go to state 82
+    ID              shift and go to state 78
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    expression                     shift and go to state 79
+    MODULAR                        shift and go to state 80
+    access                         shift and go to state 81
+    finalExp                       shift and go to state 72
+
+state 66
+
+    (26) label -> ID COLON .
+
+    RIKEY           reduce using rule 26 (label -> ID COLON .)
+    ID              reduce using rule 26 (label -> ID COLON .)
+    FMT             reduce using rule 26 (label -> ID COLON .)
+    IF              reduce using rule 26 (label -> ID COLON .)
+    GOTO            reduce using rule 26 (label -> ID COLON .)
+    RETURN          reduce using rule 26 (label -> ID COLON .)
+
+
+state 67
+
+    (25) callFunc -> ID LEPAR . RIPAR
+
+    RIPAR           shift and go to state 83
+
+
+state 68
+
+    (52) access -> ID LECOR . INT LEPAR finalExp RIPAR RICOR
+    (53) access -> ID LECOR . finalExp RICOR
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    INT             shift and go to state 84
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 85
+
+state 69
+
+    (34) print -> FMT POINT . PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR
+
+    PRINTF          shift and go to state 86
+
+
+state 70
+
+    (28) if -> IF expression . LEKEY GOTO ID SEMICOLON RIKEY
+
+    LEKEY           shift and go to state 87
+
+
+state 71
+
+    (48) finalExp -> ID .
+
+    PLUS            reduce using rule 48 (finalExp -> ID .)
+    MINUS           reduce using rule 48 (finalExp -> ID .)
+    TIMES           reduce using rule 48 (finalExp -> ID .)
+    DIV             reduce using rule 48 (finalExp -> ID .)
+    GREATER         reduce using rule 48 (finalExp -> ID .)
+    LESS            reduce using rule 48 (finalExp -> ID .)
+    GREATEREQUAL    reduce using rule 48 (finalExp -> ID .)
+    LESSEQUAL       reduce using rule 48 (finalExp -> ID .)
+    EQUALSEQUALS    reduce using rule 48 (finalExp -> ID .)
+    DISTINT         reduce using rule 48 (finalExp -> ID .)
+    LEKEY           reduce using rule 48 (finalExp -> ID .)
+    SEMICOLON       reduce using rule 48 (finalExp -> ID .)
+    RICOR           reduce using rule 48 (finalExp -> ID .)
+    RIPAR           reduce using rule 48 (finalExp -> ID .)
+    COMMA           reduce using rule 48 (finalExp -> ID .)
+
+
+state 72
+
+    (37) expression -> finalExp . PLUS finalExp
+    (38) expression -> finalExp . MINUS finalExp
+    (39) expression -> finalExp . TIMES finalExp
+    (40) expression -> finalExp . DIV finalExp
+    (41) expression -> finalExp . GREATER finalExp
+    (42) expression -> finalExp . LESS finalExp
+    (43) expression -> finalExp . GREATEREQUAL finalExp
+    (44) expression -> finalExp . LESSEQUAL finalExp
+    (45) expression -> finalExp . EQUALSEQUALS finalExp
+    (46) expression -> finalExp . DISTINT finalExp
+    (47) expression -> finalExp .
+
+    PLUS            shift and go to state 88
+    MINUS           shift and go to state 89
+    TIMES           shift and go to state 90
+    DIV             shift and go to state 91
+    GREATER         shift and go to state 92
+    LESS            shift and go to state 93
+    GREATEREQUAL    shift and go to state 94
+    LESSEQUAL       shift and go to state 95
+    EQUALSEQUALS    shift and go to state 96
+    DISTINT         shift and go to state 97
+    LEKEY           reduce using rule 47 (expression -> finalExp .)
+    SEMICOLON       reduce using rule 47 (expression -> finalExp .)
+
+
+state 73
+
+    (50) finalExp -> MINUS . INTLITERAL
+
+    INTLITERAL      shift and go to state 98
+
+
+state 74
+
+    (49) finalExp -> INTLITERAL .
+
+    PLUS            reduce using rule 49 (finalExp -> INTLITERAL .)
+    MINUS           reduce using rule 49 (finalExp -> INTLITERAL .)
+    TIMES           reduce using rule 49 (finalExp -> INTLITERAL .)
+    DIV             reduce using rule 49 (finalExp -> INTLITERAL .)
+    GREATER         reduce using rule 49 (finalExp -> INTLITERAL .)
+    LESS            reduce using rule 49 (finalExp -> INTLITERAL .)
+    GREATEREQUAL    reduce using rule 49 (finalExp -> INTLITERAL .)
+    LESSEQUAL       reduce using rule 49 (finalExp -> INTLITERAL .)
+    EQUALSEQUALS    reduce using rule 49 (finalExp -> INTLITERAL .)
+    DISTINT         reduce using rule 49 (finalExp -> INTLITERAL .)
+    LEKEY           reduce using rule 49 (finalExp -> INTLITERAL .)
+    SEMICOLON       reduce using rule 49 (finalExp -> INTLITERAL .)
+    RICOR           reduce using rule 49 (finalExp -> INTLITERAL .)
+    RIPAR           reduce using rule 49 (finalExp -> INTLITERAL .)
+    COMMA           reduce using rule 49 (finalExp -> INTLITERAL .)
+
+
+state 75
+
+    (51) finalExp -> FLOATLITERAL .
+
+    PLUS            reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    MINUS           reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    TIMES           reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    DIV             reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    GREATER         reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    LESS            reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    GREATEREQUAL    reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    LESSEQUAL       reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    EQUALSEQUALS    reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    DISTINT         reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    LEKEY           reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    SEMICOLON       reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    RICOR           reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    RIPAR           reduce using rule 51 (finalExp -> FLOATLITERAL .)
+    COMMA           reduce using rule 51 (finalExp -> FLOATLITERAL .)
+
+
+state 76
+
+    (27) gotoSt -> GOTO ID .
+
+    SEMICOLON       reduce using rule 27 (gotoSt -> GOTO ID .)
+
+
+state 77
+
+    (29) assign -> access EQUALS finalExp .
+
+    SEMICOLON       reduce using rule 29 (assign -> access EQUALS finalExp .)
+
+
+state 78
+
+    (52) access -> ID . LECOR INT LEPAR finalExp RIPAR RICOR
+    (53) access -> ID . LECOR finalExp RICOR
+    (48) finalExp -> ID .
+
+    LECOR           shift and go to state 68
+    PLUS            reduce using rule 48 (finalExp -> ID .)
+    MINUS           reduce using rule 48 (finalExp -> ID .)
+    TIMES           reduce using rule 48 (finalExp -> ID .)
+    DIV             reduce using rule 48 (finalExp -> ID .)
+    GREATER         reduce using rule 48 (finalExp -> ID .)
+    LESS            reduce using rule 48 (finalExp -> ID .)
+    GREATEREQUAL    reduce using rule 48 (finalExp -> ID .)
+    LESSEQUAL       reduce using rule 48 (finalExp -> ID .)
+    EQUALSEQUALS    reduce using rule 48 (finalExp -> ID .)
+    DISTINT         reduce using rule 48 (finalExp -> ID .)
+    SEMICOLON       reduce using rule 48 (finalExp -> ID .)
+
+
+state 79
+
+    (30) assign -> ID EQUALS expression .
+
+    SEMICOLON       reduce using rule 30 (assign -> ID EQUALS expression .)
+
+
+state 80
+
+    (31) assign -> ID EQUALS MODULAR .
+
+    SEMICOLON       reduce using rule 31 (assign -> ID EQUALS MODULAR .)
+
+
+state 81
+
+    (32) assign -> ID EQUALS access .
+
+    SEMICOLON       reduce using rule 32 (assign -> ID EQUALS access .)
+
+
+state 82
+
+    (33) MODULAR -> MATH . POINT MOD LEPAR finalExp COMMA finalExp RIPAR
+
+    POINT           shift and go to state 99
+
+
+state 83
+
+    (25) callFunc -> ID LEPAR RIPAR .
+
+    SEMICOLON       reduce using rule 25 (callFunc -> ID LEPAR RIPAR .)
+
+
+state 84
+
+    (52) access -> ID LECOR INT . LEPAR finalExp RIPAR RICOR
+
+    LEPAR           shift and go to state 100
+
+
+state 85
+
+    (53) access -> ID LECOR finalExp . RICOR
+
+    RICOR           shift and go to state 101
+
+
+state 86
+
+    (34) print -> FMT POINT PRINTF . LEPAR STRINGLITERAL COMMA printValue RIPAR
+
+    LEPAR           shift and go to state 102
+
+
+state 87
+
+    (28) if -> IF expression LEKEY . GOTO ID SEMICOLON RIKEY
+
+    GOTO            shift and go to state 103
+
+
+state 88
+
+    (37) expression -> finalExp PLUS . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 104
+
+state 89
+
+    (38) expression -> finalExp MINUS . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 105
+
+state 90
+
+    (39) expression -> finalExp TIMES . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 106
+
+state 91
+
+    (40) expression -> finalExp DIV . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 107
+
+state 92
+
+    (41) expression -> finalExp GREATER . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 108
+
+state 93
+
+    (42) expression -> finalExp LESS . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 109
+
+state 94
+
+    (43) expression -> finalExp GREATEREQUAL . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 110
+
+state 95
+
+    (44) expression -> finalExp LESSEQUAL . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 111
+
+state 96
+
+    (45) expression -> finalExp EQUALSEQUALS . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 112
+
+state 97
+
+    (46) expression -> finalExp DISTINT . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 113
+
+state 98
+
+    (50) finalExp -> MINUS INTLITERAL .
+
+    PLUS            reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    MINUS           reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    TIMES           reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    DIV             reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    GREATER         reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    LESS            reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    GREATEREQUAL    reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    LESSEQUAL       reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    EQUALSEQUALS    reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    DISTINT         reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    LEKEY           reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    SEMICOLON       reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    RICOR           reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    RIPAR           reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+    COMMA           reduce using rule 50 (finalExp -> MINUS INTLITERAL .)
+
+
+state 99
+
+    (33) MODULAR -> MATH POINT . MOD LEPAR finalExp COMMA finalExp RIPAR
+
+    MOD             shift and go to state 114
+
+
+state 100
+
+    (52) access -> ID LECOR INT LEPAR . finalExp RIPAR RICOR
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 115
+
+state 101
+
+    (53) access -> ID LECOR finalExp RICOR .
+
+    EQUALS          reduce using rule 53 (access -> ID LECOR finalExp RICOR .)
+    SEMICOLON       reduce using rule 53 (access -> ID LECOR finalExp RICOR .)
+
+
+state 102
+
+    (34) print -> FMT POINT PRINTF LEPAR . STRINGLITERAL COMMA printValue RIPAR
+
+    STRINGLITERAL   shift and go to state 116
+
+
+state 103
+
+    (28) if -> IF expression LEKEY GOTO . ID SEMICOLON RIKEY
+
+    ID              shift and go to state 117
+
+
+state 104
+
+    (37) expression -> finalExp PLUS finalExp .
+
+    LEKEY           reduce using rule 37 (expression -> finalExp PLUS finalExp .)
+    SEMICOLON       reduce using rule 37 (expression -> finalExp PLUS finalExp .)
+
+
+state 105
+
+    (38) expression -> finalExp MINUS finalExp .
+
+    LEKEY           reduce using rule 38 (expression -> finalExp MINUS finalExp .)
+    SEMICOLON       reduce using rule 38 (expression -> finalExp MINUS finalExp .)
+
+
+state 106
+
+    (39) expression -> finalExp TIMES finalExp .
+
+    LEKEY           reduce using rule 39 (expression -> finalExp TIMES finalExp .)
+    SEMICOLON       reduce using rule 39 (expression -> finalExp TIMES finalExp .)
+
+
+state 107
+
+    (40) expression -> finalExp DIV finalExp .
+
+    LEKEY           reduce using rule 40 (expression -> finalExp DIV finalExp .)
+    SEMICOLON       reduce using rule 40 (expression -> finalExp DIV finalExp .)
+
+
+state 108
+
+    (41) expression -> finalExp GREATER finalExp .
+
+    LEKEY           reduce using rule 41 (expression -> finalExp GREATER finalExp .)
+    SEMICOLON       reduce using rule 41 (expression -> finalExp GREATER finalExp .)
+
+
+state 109
+
+    (42) expression -> finalExp LESS finalExp .
+
+    LEKEY           reduce using rule 42 (expression -> finalExp LESS finalExp .)
+    SEMICOLON       reduce using rule 42 (expression -> finalExp LESS finalExp .)
+
+
+state 110
+
+    (43) expression -> finalExp GREATEREQUAL finalExp .
+
+    LEKEY           reduce using rule 43 (expression -> finalExp GREATEREQUAL finalExp .)
+    SEMICOLON       reduce using rule 43 (expression -> finalExp GREATEREQUAL finalExp .)
+
+
+state 111
+
+    (44) expression -> finalExp LESSEQUAL finalExp .
+
+    LEKEY           reduce using rule 44 (expression -> finalExp LESSEQUAL finalExp .)
+    SEMICOLON       reduce using rule 44 (expression -> finalExp LESSEQUAL finalExp .)
+
+
+state 112
+
+    (45) expression -> finalExp EQUALSEQUALS finalExp .
+
+    LEKEY           reduce using rule 45 (expression -> finalExp EQUALSEQUALS finalExp .)
+    SEMICOLON       reduce using rule 45 (expression -> finalExp EQUALSEQUALS finalExp .)
+
+
+state 113
+
+    (46) expression -> finalExp DISTINT finalExp .
+
+    LEKEY           reduce using rule 46 (expression -> finalExp DISTINT finalExp .)
+    SEMICOLON       reduce using rule 46 (expression -> finalExp DISTINT finalExp .)
+
+
+state 114
+
+    (33) MODULAR -> MATH POINT MOD . LEPAR finalExp COMMA finalExp RIPAR
+
+    LEPAR           shift and go to state 118
+
+
+state 115
+
+    (52) access -> ID LECOR INT LEPAR finalExp . RIPAR RICOR
+
+    RIPAR           shift and go to state 119
+
+
+state 116
+
+    (34) print -> FMT POINT PRINTF LEPAR STRINGLITERAL . COMMA printValue RIPAR
+
+    COMMA           shift and go to state 120
+
+
+state 117
+
+    (28) if -> IF expression LEKEY GOTO ID . SEMICOLON RIKEY
+
+    SEMICOLON       shift and go to state 121
+
+
+state 118
+
+    (33) MODULAR -> MATH POINT MOD LEPAR . finalExp COMMA finalExp RIPAR
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 122
+
+state 119
+
+    (52) access -> ID LECOR INT LEPAR finalExp RIPAR . RICOR
+
+    RICOR           shift and go to state 123
+
+
+state 120
+
+    (34) print -> FMT POINT PRINTF LEPAR STRINGLITERAL COMMA . printValue RIPAR
+    (35) printValue -> . INT LEPAR finalExp RIPAR
+    (36) printValue -> . finalExp
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    INT             shift and go to state 125
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    printValue                     shift and go to state 124
+    finalExp                       shift and go to state 126
+
+state 121
+
+    (28) if -> IF expression LEKEY GOTO ID SEMICOLON . RIKEY
+
+    RIKEY           shift and go to state 127
+
+
+state 122
+
+    (33) MODULAR -> MATH POINT MOD LEPAR finalExp . COMMA finalExp RIPAR
+
+    COMMA           shift and go to state 128
+
+
+state 123
+
+    (52) access -> ID LECOR INT LEPAR finalExp RIPAR RICOR .
+
+    EQUALS          reduce using rule 52 (access -> ID LECOR INT LEPAR finalExp RIPAR RICOR .)
+    SEMICOLON       reduce using rule 52 (access -> ID LECOR INT LEPAR finalExp RIPAR RICOR .)
+
+
+state 124
+
+    (34) print -> FMT POINT PRINTF LEPAR STRINGLITERAL COMMA printValue . RIPAR
+
+    RIPAR           shift and go to state 129
+
+
+state 125
+
+    (35) printValue -> INT . LEPAR finalExp RIPAR
+
+    LEPAR           shift and go to state 130
+
+
+state 126
+
+    (36) printValue -> finalExp .
+
+    RIPAR           reduce using rule 36 (printValue -> finalExp .)
+
+
+state 127
+
+    (28) if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .
+
+    RIKEY           reduce using rule 28 (if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .)
+    ID              reduce using rule 28 (if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .)
+    FMT             reduce using rule 28 (if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .)
+    IF              reduce using rule 28 (if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .)
+    GOTO            reduce using rule 28 (if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .)
+    RETURN          reduce using rule 28 (if -> IF expression LEKEY GOTO ID SEMICOLON RIKEY .)
+
+
+state 128
+
+    (33) MODULAR -> MATH POINT MOD LEPAR finalExp COMMA . finalExp RIPAR
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 131
+
+state 129
+
+    (34) print -> FMT POINT PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR .
+
+    SEMICOLON       reduce using rule 34 (print -> FMT POINT PRINTF LEPAR STRINGLITERAL COMMA printValue RIPAR .)
+
+
+state 130
+
+    (35) printValue -> INT LEPAR . finalExp RIPAR
+    (48) finalExp -> . ID
+    (49) finalExp -> . INTLITERAL
+    (50) finalExp -> . MINUS INTLITERAL
+    (51) finalExp -> . FLOATLITERAL
+
+    ID              shift and go to state 71
+    INTLITERAL      shift and go to state 74
+    MINUS           shift and go to state 73
+    FLOATLITERAL    shift and go to state 75
+
+    finalExp                       shift and go to state 132
+
+state 131
+
+    (33) MODULAR -> MATH POINT MOD LEPAR finalExp COMMA finalExp . RIPAR
+
+    RIPAR           shift and go to state 133
+
+
+state 132
+
+    (35) printValue -> INT LEPAR finalExp . RIPAR
+
+    RIPAR           shift and go to state 134
+
+
+state 133
+
+    (33) MODULAR -> MATH POINT MOD LEPAR finalExp COMMA finalExp RIPAR .
+
+    SEMICOLON       reduce using rule 33 (MODULAR -> MATH POINT MOD LEPAR finalExp COMMA finalExp RIPAR .)
+
+
+state 134
+
+    (35) printValue -> INT LEPAR finalExp RIPAR .
+
+    RIPAR           reduce using rule 35 (printValue -> INT LEPAR finalExp RIPAR .)
+

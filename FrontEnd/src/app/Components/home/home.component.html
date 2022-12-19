@@ -1,0 +1,93 @@
+<!-- soy la barra xd-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">PyToPy</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/autor">Autor</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <!--ng-container *ngIf="!authService.loggedIn(); else loggedIn"-->
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/home" routerLinkActive="active">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/reportes" routerLinkActive="active">Reportes</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+<!--readonly-->
+
+<div class="container">
+    <div class="row row-cols-3">
+        <div class="col">
+            <h2>Editor texto</h2>
+            <div class="textarea-wrapper">
+                <textarea class="lined-textarea" name="TIENDASTXT" id="TIENDAS" #TIENDAS rows="20" cols="120"
+                    placeholder="Ingresa tu codigo aqui...."></textarea>
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <h2>Consola</h2>
+            <textarea class="lined-textarea" name="ERRORESTXT" id="ERRORES" #ERRORES rows="20" cols="80" readonly
+                placeholder="Salidas...."></textarea>
+        </div>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary btn-block" (click)="Compilar(TIENDAS.value)">Ejecutar</button>
+    
+</div>
+
+<br>
+<br>
+<div class="container">
+    <div class="row row-cols-3">
+        <div class="col">
+            <h2>Consola Optimizacion</h2>
+            <textarea class="lined-textarea" name="ERRORES3TXT" id="ERRORES3" #ERRORES3 rows="20" cols="120" 
+                placeholder="C3D...."></textarea>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <h2>Optimizacion C3D</h2>
+            <textarea class="lined-textarea" name="ERRORES2TXT" id="ERRORES2" #ERRORES2 rows="20" cols="80" readonly
+                placeholder="Optimizacion...."></textarea>
+        </div>
+        <div class="col">
+            <br>
+    <button type="button" class="btn btn-primary btn-block" (click)="OptimizarMirilla(ERRORES3.value)">Optimizacion Mirilla</button>
+        </div>
+        <div class="col">
+            <br>
+            <button type="button" class="btn btn-primary btn-block" (click)="Compilar(TIENDAS.value)">Optimizacion Bloques</button>
+        </div>
+    </div>
+</div>
+
+    
+
+<br>
+<br>
+<br>
+<br>
+
+
+        
