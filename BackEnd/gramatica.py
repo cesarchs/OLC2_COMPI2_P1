@@ -472,3 +472,325 @@ def p_iddss(t):
     'idss   : ID  DDP tipof'
     #                    ID   ::  TIPO      bandera si puede cambiar tipo
     t[0]=AtributosStruct(t[1],     t[3],    False)
+
+#///////////////////////////////////////////////////////////////////////////CONSTRUCCION STRUCT///////////////////////////////////////////////////////////////////////////
+    
+#def p_instr_consstruct(t):
+#    'instr_consstruct   :   ID IGUAL instr_structcons opciontipocons'
+#    t[0]=ConstruccionStruct(t[1],t[3],t[4],t.lineno(1),buscar_columna(input, t.slice[1]))
+#
+#def p_opciontipocons(t):
+#    'opciontipocons     :   DDP tipof'
+#    t[0]=t[2]
+#    
+#def p_opciontipoconss(t):
+#    'opciontipocons     : '
+#    t[0]=None
+#
+#def p_instr_structconsID(t):
+#    'instr_structcons   :   ID PARIZQ listexpstruct PARDER'
+#    #t[0]=[t[3]]
+#    t[0]=Strucs(t[1],t[3])
+#    
+#def p_listexpstruct(t):
+#    'listexpstruct      :   listexpstruct COMA expresion'          
+#    t[1].append(t[3])
+#    t[0]=t[1]
+#    
+#def p_listexpstructD(t):
+#    'listexpstruct      :   expresion' 
+#    t[0]=[t[1]] 
+
+#//////////////////////////////////////////////////////////////////////////ASIGNACION ATRIBUTOS////////////////////////////////////////////////////////////////////////////
+def p_isntr_asigatribstruct(t):
+    'isntr_asigatribstruct  :   ID POINT atributospoint IGUAL expresion'
+                        #  ID   ATRIBUTO    EXP
+    t[0]=AsignacionStruct(t[1] , t[3],      t[5], t.lineno(1),buscar_columna(input, t.slice[1]))    
+def p_atributospoint(t):
+    'atributospoint         :   atributospoint POINT ID'
+    t[1].append(t[3])
+    t[0]=t[1]
+def p_atributospointid(t):
+    'atributospoint         :   ID'    
+    t[0]=[t[1]]
+
+#///////////////////////////////////////////////////////////////////////////COPY ARRAY ARREGLOS///////////////////////////////////////////////////////////////////////////
+def p_instr_copyarray(t):
+    #copiaArreglo = arreglo[:];
+    'instr_copyarray    :   ID IGUAL ID CORIZQ DP CORDER'  
+                        #idcopia       #id a copiar
+    t[0] = CopiarArreglo(t[1]     ,       t[3]        ,t.lineno(1),buscar_columna(input, t.slice[1]) )
+
+#///////////////////////////////////////////////////////////////////////////PUSH ARREGLOS///////////////////////////////////////////////////////////////////////////
+def p_expresion_pushd(t):
+     #push!(a,[exp])
+    'instr_push      : RPUSHFNA PARIZQ ID COMA lista_corchetespush PARDER'
+    t[0] = EmpujarArray(t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_expresion_pushc(t):
+     #push!(a,[exp])
+    'instr_push      : RPUSHFNA PARIZQ ID lista_corchetes COMA lista_corchetespush PARDER'
+    t[0] = EmpujarArrayD(t[3],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_expresion_push(t):
+    #push!(a,exp)
+    'instr_push      : RPUSHFNA PARIZQ ID COMA expresion PARDER'
+    t[0] = EmpujarArrayExp(t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+
+
+def p_listacorchetespushh(t):
+    'lista_corchetespush    :    CORIZQ lista_corchetespush CORDER'
+    t[0] = [t[2]]
+
+def p_listacorchetespush_2(t):
+    'lista_corchetespush    :   CORIZQ lexpresionessspush CORDER'  
+    t[0] = t[2]
+
+def p_lexpresionessspush(t):
+    'lexpresionessspush     :   lexpresionessspush COMA expresion '
+    t[1].append(t[3])
+    t[0]=t[1]
+    
+def p_lexpresionessspush2(t):
+    'lexpresionessspush     :   expresion '
+    t[0]=[t[1]]
+#///////////////////////////////////////////////////////////////////////////ACCESO ARREGLOS BEGIN: END///////////////////////////////////////////////////////////////////////////
+def p_begin_end(t):
+    'begin_end          : CORIZQ RBEGIN DP REND CORDER' 
+    coleccion = []
+    coleccion.append(t[2])
+    coleccion.append(t[4])
+    t[0]=coleccion
+
+def p_begin_endun(t):
+    'begin_end          : CORIZQ RBEGIN DP expresion CORDER'
+    coleccion = []
+    coleccion.append(t[2])
+    coleccion.append(t[4])
+    t[0]=coleccion
+
+def p_begin_enddo(t):
+    'begin_end          : CORIZQ expresion DP REND CORDER'
+    coleccion = []
+    coleccion.append(t[2])
+    coleccion.append(t[4])
+    t[0]=coleccion
+  
+    
+def p_begin_endtre(t):
+    'begin_end          : CORIZQ expresion DP expresion CORDER'
+    coleccion = []
+    coleccion.append(t[2])
+    coleccion.append(t[4])
+    t[0]=coleccion
+
+#///////////////////////////////////////////////////////////////////////////TIPOS_VALIDOS_EN_pytopy/////////////////////////////////////////////////////////////////////
+def p_tipof(t):
+    '''tipof   : RNOTHING 
+               | RINT
+               | RFLOATFN
+               | RBOOL
+               | RCHAR
+               | RSTRING 
+               | ID
+               '''
+               
+    if t[1] == 'None':
+        t[0] = Tipo.NULO           
+    elif t[1] == 'int':
+        t[0] = Tipo.ENTERO
+    elif t[1] == 'float':
+        t[0] = Tipo.DECIMAL
+    elif t[1] == 'bool':
+        t[0] = Tipo.BOOLEANO
+    elif t[1] == 'Char':
+        t[0] = Tipo.CARACTER
+    elif t[1] == 'string':
+        t[0] = Tipo.CADENA 
+    #le agrego un elif debido a que puede que sea tipo struct (id de struct)
+    else:
+        t[0] = t[1]
+
+#////////////////////////////////////////////////////////INSTRUCCION IF//////////////////////////////////////////////////////////////////////
+def p_ifIns(t):
+    '''instr_if  :  RIF expresion instrucciones REND
+                 |  RIF expresion instrucciones  RELSE  instrucciones REND
+                 |  RIF expresion instrucciones elseIfLists REND
+    '''
+    if len(t) == 5:
+        t[0] = InstrSi(t[2],t[3],None,t.lineno(1),buscar_columna(input, t.slice[1]))
+    elif len(t) == 7:
+        t[0] = InstrSi(t[2],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+    elif len(t) == 6:
+        t[0] = InstrSi(t[2],t[3],t[4],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_elseIfList(t):
+    '''elseIfLists   : RELSEIF expresion instrucciones
+                    | RELSEIF expresion instrucciones RELSE instrucciones
+                    | RELSEIF expresion instrucciones elseIfLists'''
+    if len(t) == 4:
+        t[0] = InstrSi(t[2], t[3],None,t.lineno(1),buscar_columna(input, t.slice[1]))
+    elif len(t) == 6:
+        t[0] = InstrSi(t[2], t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+    elif len(t) == 5:
+        t[0] = InstrSi(t[2], t[3],t[4],t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+    
+
+#def p_instrifsolo(t):
+#    #if exp cuerpo end;
+#    'instr_if   : RIF expresion instrucciones REND  '
+#                   #expIF  #insIF #insELE #expELSEIF
+#    t[0] = InstrSi(t[2],  t[3],    None ,    None    ,t.lineno(1),buscar_columna(input, t.slice[1]))
+#
+#def p_instr_if_else(t):
+#    #if exp cuerpo else instrucciones end;
+#    'instr_if  : RIF expresion instrucciones RELSE instrucciones REND '
+#                  #expIF #insIF #insELSE #expELSEIF  #insELSIF
+#    t[0] = InstrSi(t[2],  t[3],  t[5],    None,      t.lineno(1),buscar_columna(input, t.slice[1]))
+#
+##instrSi
+##instrPeroSI
+#def p_instr_if_elseif(t):
+#    #if exp cuerpo elseif exp instrucciones end;
+#    'instr_if  : RIF expresion instrucciones RELSEIF instr_elseif '
+#                   #expIF  #insIF #insELSE #expELSEIF  #insELSIF
+#    t[0] = InstrSi(t[2],  t[3],  None,       t[5],  t.lineno(1),buscar_columna(input, t.slice[1]))
+#    
+#def p_instr_elseif(t):
+#    'instr_elseif : expresion instrucciones REND '
+#                   #expIF  #insIF #insELE #expELSEIF
+#    t[0] = InstrSi(t[1],  t[2],    None ,    None    ,t.lineno(3),buscar_columna(input, t.slice[3]))
+#
+#def p_instr_elseif_else(t):
+#    'instr_elseif :  expresion instrucciones RELSE instrucciones REND'
+#                   #expIF #insIF #insELSE #expELSEIF  #insELSIF
+#    t[0] = InstrSi(t[1],  t[2],  t[4],    None,    t.lineno(3),buscar_columna(input, t.slice[3]))
+#
+#def p_instr_elseif_elseif(t):
+#    'instr_elseif :  expresion instrucciones RELSEIF instr_elseif'
+#                   #expIF  #insIF #insELSE #expELSEIF  #insELSIF
+#    t[0] = InstrSi(t[1],  t[2],  None,       t[4],  t.lineno(3),buscar_columna(input, t.slice[3]))
+
+
+#////////////////////////////////////////////////////////INSTRUCCION WHILE/////////////////////////////////////////////////////////////////
+def p_instr_while(t):
+    'instr_while    :   RWHILE expresion instrucciones REND  '
+                    #EXP  #INSTR
+    t[0] = Mientras(t[2],  t[3],  t.lineno(1),buscar_columna(input, t.slice[1]))   
+#////////////////////////////////////////////////////////INSTRUCCION FOR/////////////////////////////////////////////////////////////////
+def p_instr_for(t):
+    'instr_for      :   RFOR ID RIN lexpsfor instrucciones REND '
+                #ID   #EXP   #instrs
+    t[0] = Para(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_instr_forarr(t):
+    'instr_for      :   RFOR ID RIN lexpsforarray instrucciones REND '
+                #ID   #EXP   #instrs
+    t[0] = ParaArray(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_instr_forarr2(t):
+    'instr_for      :   RFOR ID RIN ID instrucciones REND '
+                #ID   #EXP   #instrs
+    t[0] = ParaArrayD(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_instr_forstring(t):
+    'instr_for      :   RFOR ID RIN CADENA instrucciones REND '
+                #ID   #EXP   #instrs
+    t[0] = ParaStr(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_lexpsfor(t):
+    'lexpsfor       : expresion DP expresion'
+    t[0]= Aritmetica(OpsAritmetico.DP,t[1],t[3],t.lineno(2),buscar_columna(input, t.slice[2]))
+def p_lexpsforarray(t):
+    'lexpsforarray       : CORIZQ list_expss CORDER'
+    t[0]= t[2]
+def p_list_expss(t):
+    'list_expss     : list_expss COMA expresion '
+    t[1].append(t[3])
+    t[0]=t[1]
+def p_list_expss1(t):
+    'list_expss     : expresion '
+    t[0]=[t[1]]    
+#////////////////////////////////////////////////////////INSTRUCCION FUNCION/////////////////////////////////////////////////////////////////
+def p_instr_func_params(t):
+    'instr_func     :   RFUNCTION ID PARIZQ params PARDER opciontipo instrucciones REND '
+                    #ID    #params   #INSTR
+    t[0] = Funcion( t[2],   t[4],   t[6],  t[7],    t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_instr_func(t):
+    'instr_func     :   RFUNCTION ID PARIZQ PARDER opciontipo instrucciones REND  '
+                    #ID          #INSTR
+    t[0] = Funcion( t[2], [] , t[5]  ,t[6],    t.lineno(1),buscar_columna(input, t.slice[1]))
+
+def p_tipo_o_no(t):
+    'opciontipo       : DDP tipof'
+    t[0]=t[2]
+
+def p_tipo_o_no_dos(t):
+    'opciontipo       : '
+    t[0]=None    
+    
+def p_paramsparams_param(t):
+    'params         :   params COMA param'
+    t[1].append(t[3])
+    t[0]=t[1]
+
+def p_params_param(t):
+    'params         :  param'
+    t[0]=[t[1]]
+    
+def p_param(t):
+    'param          :   ID'
+    t[0] = {'id':t[1],'tipo':Tipo.NULO,'vector':False}
+
+def p_param_tip(t):
+    'param          :   ID DDP tipof'
+    t[0] = {'id':t[1],'tipo':t[3],'vector':False}
+
+def p_param_vec(t):
+    'param          :   ID DDP RVECTOR LLAVEA masrvector LLAVEC'
+    t[0] = {'id':t[1],'tipo':t[5],'vector':True}
+
+#////////////////////////////////////////////////////////INSTRUCCION LLAMADA/////////////////////////////////////////////////////////////////   
+def p_instr_llamada(t):
+    'instr_llamada  :   ID PARIZQ PARDER  '
+                    #ID #param
+    #print("instr_llamada")
+    t[0] = Llamada( t[1],[], t.lineno(1),buscar_columna(input, t.slice[1]))
+     
+def p_instr_llamada_param(t):
+    'instr_llamada  :   ID PARIZQ params_llam PARDER '
+                    #ID  #params
+    #print("instr_llamada")                    
+    t[0] = Llamada( t[1],t[3] ,t.lineno(1),buscar_columna(input, t.slice[1]))
+    
+def p_llamada_params(t):
+    'params_llam         :   params_llam COMA paramet'
+    t[1].append(t[3])
+    t[0]=t[1]
+
+def p_llamada_params_param(t):
+    'params_llam         :  paramet'
+    t[0]=[t[1]]
+
+def p_lla_param(t):
+    'paramet  :   expresion'
+    t[0] = t[1]
+
+#//////////////////////////////////////////////////////INSTRUCCION RETURN/////////////////////////////////////////////////////////////////
+def p_instr_return(t):
+    'instr_return  : RRETURN expresion '
+    t[0] = Retorno(t[2],t.lineno(1),buscar_columna(input, t.slice[1]))
+
+#//////////////////////////////////////////////////////INSTRUCCION BREAK/////////////////////////////////////////////////////////////////
+def p_instr_break(t):
+    'instr_break    : RBREAK '
+    t[0] = Break(t.lineno(1),buscar_columna(input, t.slice[1]))
+
+#//////////////////////////////////////////////////////INSTRUCCION CONTINUE/////////////////////////////////////////////////////////////////
+def p_instr_continue(t):
+    'instr_continue :   RCONTINUE '
+    t[0] = Continue(t.lineno(1),buscar_columna(input, t.slice[1]))
+    
