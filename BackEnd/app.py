@@ -1,5 +1,5 @@
 from flask import Flask, request,jsonify,render_template
-
+from EnviarInformacion.pInterpretePy import Analisis
 
 app = Flask(__name__)
 
@@ -64,28 +64,44 @@ def vista():
             
             valor =""
             return render_template("analisis.html",initial="",regres = erroress['consola'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+        elif request.form.get("ejecutar"):
+            inpt = request.form["inpt"]
+            if inpt != "":
+                #print("RESULTADO DE ANALIZAR: "+inpt)
+                valor = inpt
+                nuevoAnalisis = Analisis()
+                #realiza analisis lexico,sintactico y semantico
+                errore=nuevoAnalisis.principal(inpt)
+                #retorna el valor luego de analisis
+                erroress['entrada']=inpt
+                erroress['consola']=errore.getConsola()+errore.getC3D()
+                erroress['c3d']=''
+                erroress['bloques']=''
+                erroress['arbol']=errore.getArbol()
+                erroress['ts']= errore.getTs()
+                erroress['error']=errore.getErrores() 
+                erroress['reporteMirilla']=[]
+                erroress['reporteBloques']=[]
+
+                return render_template("analisis.html",initial=valor,regres = erroress['consola'],c3dopt=erroress['c3d'],c3doptb=erroress['bloques'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+            else:
+
+                return render_template("analisis.html",initial=erroress['entrada'],regres = erroress['consola'],c3dopt=erroress['c3d'],c3doptb=erroress['bloques'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+       
+
+    else:
+
+        return render_template("analisis.html",initial=erroress['entrada'],regres = erroress['consola'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-AnalisisPyToPy={}
-MirillaPyToPy={}
-#@app.route("/", methods=["POST","GET"])
-@app.route("/",methods=["GET"])
+@app.route("/hi",methods=["GET"])
 def helloWorld():
   return "<h1>CESAR LEONEL CHAMALE SICAN - 201700634</h1>"
+
+
+
+
+
 
 
 @app.route("/Flask", methods=["POST"])
