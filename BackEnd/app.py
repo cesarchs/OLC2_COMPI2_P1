@@ -22,6 +22,64 @@ erroress['bloques']=''
 erroress['reporteMirilla']=[]
 erroress['reporteBloques']=[]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/", methods=["POST","GET"])
+def vista():
+    #global backupLista
+    #flash("You were successfully logged in")
+    #global backupLista
+    global erroress
+    
+    if request.method == "POST":
+
+        if request.form.get("limpiar"):
+            #erroress={}
+            global erroress
+            erroress['entrada']=''
+            erroress['arbol']="digraph{PYTHON->PyToPy}"
+            erroress['ts']=[]
+            erroress['ts'].append({'no':'1','id':'-','tipo':'-','ambito':'-','valor':'-','fil':'-','col':'-'})
+            erroress['error']=[]
+            erroress['error'].append({'no':'0','tipo':'-','des':'-','fil':'-','col':'-','fecha':'-'})
+            erroress['consola']="aun no se ha realizado ningun analisis"
+            erroress['c3d']=''
+            erroress['bloques']=''
+            erroress['reporteMirilla']=[]
+            erroress['reporteBloques']=[]
+
+            
+            valor =""
+            return render_template("analisis.html",initial="",regres = erroress['consola'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 AnalisisPyToPy={}
 MirillaPyToPy={}
 #@app.route("/", methods=["POST","GET"])
