@@ -980,3 +980,23 @@ input = ''
 
 def getErrores():
     return ListaErrores
+
+def parse(inp):
+    #limpio todo para un nuevo analisis
+    global ListaErrores
+    global lexer
+    ListaErrores = []
+    lexer = lex.lex()
+    parser = yacc.yacc()
+    global input
+    input = inp
+    #genero un nuevo analisis y lo retorno
+    return parser.parse(inp,lexer=lexer)
+
+def getNativas(arbolito,tabla): #CREACION DE FUNCIONES NATIVAS
+    id = 'nativaTrunc'
+    params = [{'id':'totrunc_#_#_#_parameter','tipo':Tipo.ENTERO},{'id':'totrunc_#_#_#_parameterdos','tipo':Tipo.DECIMAL}]
+    instrs=[]
+    nativaTruc = Trunc(id,params,instrs,-1,-1)
+    tabla.setSimboloEnTsFunc(nativaTruc,id,True)
+    
