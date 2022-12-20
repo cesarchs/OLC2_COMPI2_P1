@@ -14,6 +14,9 @@ function imprimirInicial()
             elseif (index >= 7 and index <= 9) 
                 println("*****    ****************    *******************    ******                 *****  **********************")
             elseif (index == 10) 
-                println("*****                        ******                 ******                 *****              **********")
+                println("*****                        ******                 ******                 *****              **********");
+            ;
+        ;
+;
     
     imprimirInicial()

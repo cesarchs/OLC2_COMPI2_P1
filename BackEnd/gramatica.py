@@ -614,15 +614,15 @@ def p_tipof(t):
 
 #////////////////////////////////////////////////////////INSTRUCCION IF//////////////////////////////////////////////////////////////////////
 def p_ifIns(t):
-    '''instr_if  :  RIF expresion instrucciones REND
-                 |  RIF expresion instrucciones  RELSE  instrucciones REND
-                 |  RIF expresion instrucciones elseIfLists REND
+    '''instr_if  :  RIF expresion instrucciones 
+                 |  RIF expresion instrucciones  RELSE  instrucciones
+                 |  RIF expresion instrucciones elseIfLists
     '''
-    if len(t) == 5:
+    if len(t) == 4:
         t[0] = InstrSi(t[2],t[3],None,t.lineno(1),buscar_columna(input, t.slice[1]))
-    elif len(t) == 7:
-        t[0] = InstrSi(t[2],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
     elif len(t) == 6:
+        t[0] = InstrSi(t[2],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+    elif len(t) == 5:
         t[0] = InstrSi(t[2],t[3],t[4],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_elseIfList(t):
@@ -638,40 +638,39 @@ def p_elseIfList(t):
     
     
 
-#def p_instrifsolo(t):
-#    #if exp cuerpo end;
-#    'instr_if   : RIF expresion instrucciones REND  '
-#                   #expIF  #insIF #insELE #expELSEIF
-#    t[0] = InstrSi(t[2],  t[3],    None ,    None    ,t.lineno(1),buscar_columna(input, t.slice[1]))
-#
-#def p_instr_if_else(t):
-#    #if exp cuerpo else instrucciones end;
-#    'instr_if  : RIF expresion instrucciones RELSE instrucciones REND '
-#                  #expIF #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[2],  t[3],  t[5],    None,      t.lineno(1),buscar_columna(input, t.slice[1]))
-#
-##instrSi
-##instrPeroSI
-#def p_instr_if_elseif(t):
-#    #if exp cuerpo elseif exp instrucciones end;
-#    'instr_if  : RIF expresion instrucciones RELSEIF instr_elseif '
-#                   #expIF  #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[2],  t[3],  None,       t[5],  t.lineno(1),buscar_columna(input, t.slice[1]))
-#    
-#def p_instr_elseif(t):
-#    'instr_elseif : expresion instrucciones REND '
-#                   #expIF  #insIF #insELE #expELSEIF
-#    t[0] = InstrSi(t[1],  t[2],    None ,    None    ,t.lineno(3),buscar_columna(input, t.slice[3]))
-#
-#def p_instr_elseif_else(t):
-#    'instr_elseif :  expresion instrucciones RELSE instrucciones REND'
-#                   #expIF #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[1],  t[2],  t[4],    None,    t.lineno(3),buscar_columna(input, t.slice[3]))
-#
-#def p_instr_elseif_elseif(t):
-#    'instr_elseif :  expresion instrucciones RELSEIF instr_elseif'
-#                   #expIF  #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[1],  t[2],  None,       t[4],  t.lineno(3),buscar_columna(input, t.slice[3]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #////////////////////////////////////////////////////////INSTRUCCION WHILE/////////////////////////////////////////////////////////////////
@@ -715,12 +714,12 @@ def p_list_expss1(t):
     t[0]=[t[1]]    
 #////////////////////////////////////////////////////////INSTRUCCION FUNCION/////////////////////////////////////////////////////////////////
 def p_instr_func_params(t):
-    'instr_func     :   RFUNCTION ID PARIZQ params PARDER opciontipo instrucciones REND '
+    'instr_func     :   RFUNCTION ID PARIZQ params PARDER opciontipo instrucciones '
                     #ID    #params   #INSTR
     t[0] = Funcion( t[2],   t[4],   t[6],  t[7],    t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_instr_func(t):
-    'instr_func     :   RFUNCTION ID PARIZQ PARDER opciontipo instrucciones REND  '
+    'instr_func     :   RFUNCTION ID PARIZQ PARDER opciontipo instrucciones '
                     #ID          #INSTR
     t[0] = Funcion( t[2], [] , t[5]  ,t[6],    t.lineno(1),buscar_columna(input, t.slice[1]))
 
