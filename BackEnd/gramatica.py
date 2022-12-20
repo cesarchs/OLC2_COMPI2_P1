@@ -372,19 +372,19 @@ def p_instr_declaracion_sintipo_global(t):
 #***CON TIPO 
 def p_instr_declaraciontipo(t):
     #EN ESTA PRODUCCION NO SE SABE SI SERA UNA MODIFICACION GLOBAL O LOCAL
-    'instr_declaraciontipo : ID IGUAL expresion DDP tipof '
+    'instr_declaraciontipo : ID IGUAL expresion DP tipof '
     t[0] = Declaracion(t[1],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 ###CON PALABRA RESERVADA LOCAL###
 def p_instr_declaraciontipo_local(t):
     #LOCAL ID = EXP :: TIPO
-    'instr_declaraciontipo : RLOCAL ID IGUAL expresion DDP tipof'
+    'instr_declaraciontipo : RLOCAL ID IGUAL expresion DP tipof'
     t[0] = DeclaracionLocal(t[2],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 ###CON PALABRA RESERVADA LOCAL###
 def p_instr_declaraciontipo_global(t):
     #LOCAL ID = EXP :: TIPO
-    'instr_declaraciontipo : RGLOBAL ID IGUAL expresion DDP tipof '
+    'instr_declaraciontipo : RGLOBAL ID IGUAL expresion DP tipof '
     t[0] = DeclaracionGlobal(t[2],t[4],t[6],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 #///////////////////////////////////////////////////////////////////////////DECLARACION Y MOD ARREGLOS///////////////////////////////////////////////////////////////////////////
@@ -395,7 +395,7 @@ def p_instr_declararreglo(t):
 
 def p_instr_declararreglon(t):
     
-    'instr_declararreglo    : ID IGUAL CORIZQ tist CORDER DDP RVECTOR LLAVEA masrvector LLAVEC '
+    'instr_declararreglo    : ID IGUAL CORIZQ tist CORDER DP RVECTOR LLAVEA masrvector LLAVEC '
     t[0] = DeclaracionArreglo(t[1],t[4],t[9],t.lineno(1),buscar_columna(input, t.slice[1]))
     
 def p_masrvector(t):
@@ -469,7 +469,7 @@ def p_iddssu(t):
     t[0]=AtributosStruct(t[1],     Tipo.NULO, True)
     
 def p_iddss(t):
-    'idss   : ID  DDP tipof'
+    'idss   : ID  DP tipof'
     #                    ID   ::  TIPO      bandera si puede cambiar tipo
     t[0]=AtributosStruct(t[1],     t[3],    False)
 
@@ -614,15 +614,15 @@ def p_tipof(t):
 
 #////////////////////////////////////////////////////////INSTRUCCION IF//////////////////////////////////////////////////////////////////////
 def p_ifIns(t):
-    '''instr_if  :  RIF expresion instrucciones REND
-                 |  RIF expresion instrucciones  RELSE  instrucciones REND
-                 |  RIF expresion instrucciones elseIfLists REND
+    '''instr_if  :  RIF expresion instrucciones 
+                 |  RIF expresion instrucciones  RELSE  instrucciones
+                 |  RIF expresion instrucciones elseIfLists
     '''
-    if len(t) == 5:
+    if len(t) == 4:
         t[0] = InstrSi(t[2],t[3],None,t.lineno(1),buscar_columna(input, t.slice[1]))
-    elif len(t) == 7:
-        t[0] = InstrSi(t[2],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
     elif len(t) == 6:
+        t[0] = InstrSi(t[2],t[3],t[5],t.lineno(1),buscar_columna(input, t.slice[1]))
+    elif len(t) == 5:
         t[0] = InstrSi(t[2],t[3],t[4],t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_elseIfList(t):
@@ -638,45 +638,44 @@ def p_elseIfList(t):
     
     
 
-#def p_instrifsolo(t):
-#    #if exp cuerpo end;
-#    'instr_if   : RIF expresion instrucciones REND  '
-#                   #expIF  #insIF #insELE #expELSEIF
-#    t[0] = InstrSi(t[2],  t[3],    None ,    None    ,t.lineno(1),buscar_columna(input, t.slice[1]))
-#
-#def p_instr_if_else(t):
-#    #if exp cuerpo else instrucciones end;
-#    'instr_if  : RIF expresion instrucciones RELSE instrucciones REND '
-#                  #expIF #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[2],  t[3],  t[5],    None,      t.lineno(1),buscar_columna(input, t.slice[1]))
-#
-##instrSi
-##instrPeroSI
-#def p_instr_if_elseif(t):
-#    #if exp cuerpo elseif exp instrucciones end;
-#    'instr_if  : RIF expresion instrucciones RELSEIF instr_elseif '
-#                   #expIF  #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[2],  t[3],  None,       t[5],  t.lineno(1),buscar_columna(input, t.slice[1]))
-#    
-#def p_instr_elseif(t):
-#    'instr_elseif : expresion instrucciones REND '
-#                   #expIF  #insIF #insELE #expELSEIF
-#    t[0] = InstrSi(t[1],  t[2],    None ,    None    ,t.lineno(3),buscar_columna(input, t.slice[3]))
-#
-#def p_instr_elseif_else(t):
-#    'instr_elseif :  expresion instrucciones RELSE instrucciones REND'
-#                   #expIF #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[1],  t[2],  t[4],    None,    t.lineno(3),buscar_columna(input, t.slice[3]))
-#
-#def p_instr_elseif_elseif(t):
-#    'instr_elseif :  expresion instrucciones RELSEIF instr_elseif'
-#                   #expIF  #insIF #insELSE #expELSEIF  #insELSIF
-#    t[0] = InstrSi(t[1],  t[2],  None,       t[4],  t.lineno(3),buscar_columna(input, t.slice[3]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #////////////////////////////////////////////////////////INSTRUCCION WHILE/////////////////////////////////////////////////////////////////
 def p_instr_while(t):
-    'instr_while    :   RWHILE expresion instrucciones REND  '
+    'instr_while    :   RWHILE expresion instrucciones '
                     #EXP  #INSTR
     t[0] = Mientras(t[2],  t[3],  t.lineno(1),buscar_columna(input, t.slice[1]))   
 #////////////////////////////////////////////////////////INSTRUCCION FOR/////////////////////////////////////////////////////////////////
@@ -715,17 +714,17 @@ def p_list_expss1(t):
     t[0]=[t[1]]    
 #////////////////////////////////////////////////////////INSTRUCCION FUNCION/////////////////////////////////////////////////////////////////
 def p_instr_func_params(t):
-    'instr_func     :   RFUNCTION ID PARIZQ params PARDER opciontipo instrucciones REND '
+    'instr_func     :   RFUNCTION ID PARIZQ params PARDER opciontipo instrucciones '
                     #ID    #params   #INSTR
     t[0] = Funcion( t[2],   t[4],   t[6],  t[7],    t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_instr_func(t):
-    'instr_func     :   RFUNCTION ID PARIZQ PARDER opciontipo instrucciones REND  '
+    'instr_func     :   RFUNCTION ID PARIZQ PARDER opciontipo instrucciones '
                     #ID          #INSTR
     t[0] = Funcion( t[2], [] , t[5]  ,t[6],    t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_tipo_o_no(t):
-    'opciontipo       : DDP tipof'
+    'opciontipo       : DP tipof'
     t[0]=t[2]
 
 def p_tipo_o_no_dos(t):
@@ -746,11 +745,11 @@ def p_param(t):
     t[0] = {'id':t[1],'tipo':Tipo.NULO,'vector':False}
 
 def p_param_tip(t):
-    'param          :   ID DDP tipof'
+    'param          :   ID DP tipof'
     t[0] = {'id':t[1],'tipo':t[3],'vector':False}
 
 def p_param_vec(t):
-    'param          :   ID DDP RVECTOR LLAVEA masrvector LLAVEC'
+    'param          :   ID DP RVECTOR LLAVEA masrvector LLAVEC'
     t[0] = {'id':t[1],'tipo':t[5],'vector':True}
 
 #////////////////////////////////////////////////////////INSTRUCCION LLAMADA/////////////////////////////////////////////////////////////////   
