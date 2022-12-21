@@ -7,7 +7,8 @@ class C3DInstruction(ABC):
         self.column = column
         self.haveInt = False
         self.deleted = False
-    
+        self.esLider = False
+        self.opt = False
     @abstractmethod
     def getCode(self):
         pass
