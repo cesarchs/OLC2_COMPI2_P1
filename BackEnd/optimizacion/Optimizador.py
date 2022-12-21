@@ -1,12 +1,12 @@
 #saltos
 #from ast import literal_eval
-from optimizacion.Expresiones.expresion import Expresion
-from optimizacion.Expresiones.literal import Literal
+from optimizacion.Expresiones.Expresiones import Expresion
+from optimizacion.Expresiones.Literal import Literal
 from optimizacion.Instrucciones.asignacion import Asignacion
 from optimizacion.Instrucciones.label import Label
 from optimizacion.bloque import Bloque
-from optimizacion.gotos.goto import Goto
-from optimizacion.gotos.iff import If
+from optimizacion.Gotos.Goto import Goto
+from optimizacion.Gotos.If import If
 
 class Optimizador:
     def __init__(self,packages,temps,code):

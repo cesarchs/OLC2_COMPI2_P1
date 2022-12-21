@@ -1,25 +1,24 @@
 #IMPORTS:
 #clase optimizador
-# GENERAL
-from Optimizador.Instrucciones.MathGo import MathFunc
-from Optimizador.Optimizador import *
+from optimizacion.Optimizador import Optimizador
 
-# INSTRUCCIONES GENERALES
-from Optimizador.Instrucciones.Asignacion import *
-from Optimizador.Instrucciones.LlamadaFuncion import *
-from Optimizador.Instrucciones.Funcion import *
-from Optimizador.Instrucciones.Label import *
-from Optimizador.Instrucciones.Print import *
-from Optimizador.Instrucciones.Return import *
+#INSTRUCCIONES
+from optimizacion.Instrucciones.asignacion import Asignacion
+from optimizacion.Instrucciones.callfun import CallFun
+from optimizacion.Instrucciones.funcion import Function
+from optimizacion.Instrucciones.label import Label
+from optimizacion.Instrucciones.print import Print
+from optimizacion.Instrucciones.returrn import Return
+from optimizacion.Instrucciones.Mathh import FuncionMath
 
-# INSTRUCCIONES DE CAMBIO DE FLUJO
-from Optimizador.Gotos.If import *
-from Optimizador.Gotos.Goto   import *
+#SALTOS
+from optimizacion.Gotos.If import If
+from optimizacion.Gotos.Goto import Goto
 
-# INSTRUCCIONES DE EXPRESION
-from Optimizador.Expresiones.Acceso import *
-from Optimizador.Expresiones.Expresiones import *
-from Optimizador.Expresiones.Literal import *
+#EXPRESIONES
+from optimizacion.Expresiones.Acceso import Access
+from optimizacion.Expresiones.Expresiones import Expresion
+from optimizacion.Expresiones.Literal import Literal
 
 #ListaErrores = []
 
