@@ -1,4 +1,4 @@
-from Optimizador.InstruccionC3D import *
+from optimizacion.c3d import *
 
 class If(C3DInstruction):
 

@@ -66,41 +66,6 @@ class Aritmetica(Expresion):
                 generator.addExp(temp,resizq.getValor(),resder.getValor(),op)
                 return Return(temp,self.tipo,True)
             
-            #String + String 
-            elif self.operacionI.tipo == Tipo.CADENA and self.operacionD.tipo== Tipo.CADENA:
-                self.tipo = Tipo.CADENA
-                #generator.addExp(temp,resizq.getValor(),resder.valor,op)
-                generator.concatenarCadena()
-                paramTemp = generator.agregarTemporal();generator.liberarTemporal(temp)# genero temporal para entorno simulado
-                
-                #   #                       CAMBIO DE ENTORNO SIMULADO:
-                generator.addExp(paramTemp, 'P', tabla.size, '+') #tn=p+n
-
-            #   #                          ENVÍO DE PARAMETROS
-                #param1:
-                generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
-                #valorparam1:
-                generator.setPila(paramTemp,resizq.getValor())         #stack[tn]=resizq.temp
-                
-                #param2:
-                generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
-            #   #valorparam2:
-                generator.setPila(paramTemp,resder.getValor())         #stack[tn]=resizq.temp
-                
-                #   #                        CAMBIO DE ENTORNO FORMAL
-                generator.newEnv(tabla.size)
-                generator.llamandaFuncion("nativaconcatenarCadena")
-
-            #   #                        obtengo valor de retorno
-                temp = generator.agregarTemporal();generator.liberarTemporal(temp)
-                generator.getPila(temp,'P')
-                
-                 #   #                       regreso a entorno 
-
-                generator.returnEntorno(tabla.size)
-
-                return Return(temp,self.tipo,True)
-            
             return Error("Semantico", "Este tipo de operacion en '+' no es admitivido.", self.fila, self.columna)
             
         # OPE1 - OPE2 en julia solo hay restas aritmeticas con - (RESTA)
@@ -178,7 +143,78 @@ class Aritmetica(Expresion):
                 return Return(temp,self.tipo,True)
                 
             
-        # OPE1 * OPE2  en PYTHON (J) hay multiplicaciones con * y concatenaciones unicamente de strings con * (MULTIPLICACION)
+            #if self.operacionI.tipo == Tipo.CADENA and self.operacionD.tipo == Tipo.CADENA or self.operacionI.tipo == Tipo.CADENA and self.operacionD.tipo == Tipo.STRUCT or self.operacionI.tipo == Tipo.STRUCT and self.operacionD.tipo == Tipo.CADENA or self.operacionI.tipo == Tipo.STRUCT and self.operacionD.tipo == Tipo.STRUCT:
+            #    generator.concatenarCadena()
+            #   
+            #    paramTemp = generator.agregarTemporal()# genero temporal para entorno simulado
+            #    #                       CAMBIO DE ENTORNO SIMULADO:
+            #    generator.addExp(paramTemp, 'P', tabla.size, '+') #tn=p+n
+#
+            #    #                          ENVÍO DE PARAMETROS
+            #    #param1:
+            #    generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
+            #    #valorparam1:
+            #    generator.setPila(paramTemp,resizq.valor)         #stack[tn]=resizq.temp
+#
+            #    #param2:
+            #    generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
+            #    #valorparam2:
+            #    generator.setPila(paramTemp,resder.valor)         #stack[tn]=resizq.temp
+#
+            #    #                        CAMBIO DE ENTORNO FORMAL
+            #    generator.newEnv(tabla.size)
+            #    generator.llamandaFuncion("nativaconcatenarCadena")
+#
+            #    #                        obtengo valor de retorno
+            #    temp = generator.agregarTemporal()
+            #    generator.getPila(temp,'P')
+#
+            #    #                       regreso a entorno 
+#
+            #    generator.returnEntorno(tabla.size)
+#
+            #    return Return(temp,self.tipo,True)
+            
+#            elif (self.operacionI.tipo == Tipo.CADENA and self.operacionD.tipo == Tipo.ENTERO) or (self.operacionI.tipo == Tipo.CADENA and self.operacionD.tipo == Tipo.DECIMAL):
+#                generator.concatStringNum()
+#                paramTemp = generator.agregarTemporal()# genero temporal para entorno simulado
+#                #                       CAMBIO DE ENTORNO SIMULADO:
+#                generator.addExp(paramTemp, 'P', tabla.size, '+') #tn=p+n
+#                
+#                #                          ENVÍO DE PARAMETROS
+#                #param1:
+#                generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
+#                #valorparam1:
+#                generator.setPila(paramTemp,resizq.valor)         #stack[tn]=resizq.temp
+#                
+#                #param2:
+#                generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
+#                #valorparam2:
+#                generator.setPila(paramTemp,resder.valor)         #stack[tn]=resizq.temp
+#                
+#                #                        CAMBIO DE ENTORNO FORMAL
+#                generator.newEnv(tabla.size)
+#                generator.llamandaFuncion("nativaconcatStringNum")
+#                
+#                #                        obtengo valor de retorno
+#                temp = generator.agregarTemporal()
+#                generator.getPila(temp,'P')
+#                
+#                #                       regreso a entorno 
+#                 
+#                generator.returnEntorno(tabla.size)
+#                 
+#                return Return(temp,self.tipo,True)
+            
+            
+            
+            #try:
+            #    return str(self.getValor(self.operacionI.tipo,resizq)) + str(self.getValor(self.operacionD.tipo,resder))#STRING
+            #except:
+            #    return Error("Semantico", "Este tipo de operacion en ',' no es admitivido.", self.fila, self.columna)
+            #return Error("Semantico", "Este tipo de operacion en ',' no es admitivido.", self.fila, self.columna)
+            
+        # OPE1 * OPE2  en julia hay multiplicaciones con * y concatenaciones unicamente de strings con * (MULTIPLICACION)
         elif self.operador == OpsAritmetico.POR: 
             temp = generator.agregarTemporal();generator.liberarTemporal(temp)
             op = '*'
@@ -204,6 +240,41 @@ class Aritmetica(Expresion):
             elif self.operacionI.tipo == Tipo.DECIMAL and self.operacionD.tipo== Tipo.ENTERO:
                 self.tipo = Tipo.DECIMAL
                 generator.addExp(temp,resizq.getValor(),resder.getValor(),op)
+                return Return(temp,self.tipo,True)
+            
+            #String * String 
+            elif self.operacionI.tipo == Tipo.CADENA and self.operacionD.tipo== Tipo.CADENA:
+                self.tipo = Tipo.CADENA
+                #generator.addExp(temp,resizq.getValor(),resder.valor,op)
+                generator.concatenarCadena()
+                paramTemp = generator.agregarTemporal();generator.liberarTemporal(temp)# genero temporal para entorno simulado
+                
+                #   #                       CAMBIO DE ENTORNO SIMULADO:
+                generator.addExp(paramTemp, 'P', tabla.size, '+') #tn=p+n
+
+            #   #                          ENVÍO DE PARAMETROS
+                #param1:
+                generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
+                #valorparam1:
+                generator.setPila(paramTemp,resizq.getValor())         #stack[tn]=resizq.temp
+                
+                #param2:
+                generator.addExp(paramTemp, paramTemp, '1', '+')  #tn=tn+1
+            #   #valorparam2:
+                generator.setPila(paramTemp,resder.getValor())         #stack[tn]=resizq.temp
+                
+                #   #                        CAMBIO DE ENTORNO FORMAL
+                generator.newEnv(tabla.size)
+                generator.llamandaFuncion("nativaconcatenarCadena")
+
+            #   #                        obtengo valor de retorno
+                temp = generator.agregarTemporal();generator.liberarTemporal(temp)
+                generator.getPila(temp,'P')
+                
+                 #   #                       regreso a entorno 
+
+                generator.returnEntorno(tabla.size)
+
                 return Return(temp,self.tipo,True)
             
             return Error("Semantico", "Este tipo de operacion con '*' no es admitivido.", self.fila, self.columna)
