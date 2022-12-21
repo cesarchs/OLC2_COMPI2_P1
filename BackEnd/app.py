@@ -1,5 +1,6 @@
 from flask import Flask, request,jsonify,render_template
 from EnviarInformacion.pInterpretePy import Analisis
+import gramaticaop as c3d
 
 app = Flask(__name__)
 
@@ -21,7 +22,6 @@ erroress['c3d']=''
 erroress['bloques']=''
 erroress['reporteMirilla']=[]
 erroress['reporteBloques']=[]
-
 
 
 
@@ -87,7 +87,32 @@ def vista():
             else:
 
                 return render_template("analisis.html",initial=erroress['entrada'],regres = erroress['consola'],c3dopt=erroress['c3d'],c3doptb=erroress['bloques'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+        elif request.form.get("mirilla"):
+            inpta = request.form["c3dinp"]
+            if inpta != "":
+                try:
+                    valorr = inpta
+                    #mando entrada en c3d para optimizar
+                    instrucciones = c3d.parseOP(valorr)
+                    if instrucciones != None:
+                        instrucciones.Mirilla()
+                        salida = instrucciones.getCode()#aqui esta el codigo optimizado
+                        #print(salida)
+                        
+                        erroress['consola']=valorr
+                        erroress['c3d']=salida
+
+                        erroress['reporteMirilla']= instrucciones.getReporte()
+
+                        return render_template("analisis.html",initial=erroress['entrada'],regres = erroress['consola'],c3dopt=erroress['c3d'],c3doptb=erroress['bloques'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+                    else:
+                        erroress['consola']='Hubo errores sintácticos en optimizacion, no se pudo recuperar'#este cambiara por la consola de opt
+                        erroress['c3d']=''
+                        erroress['bloques']=''
        
+                        return render_template("analisis.html",initial=erroress['entrada'],regres = erroress['consola'],c3dopt=erroress['c3d'],c3doptb=erroress['bloques'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
+                except:
+                    print("NO SE PUDO EJECUTAR OPTIMIZACION")
 
     else:
 
