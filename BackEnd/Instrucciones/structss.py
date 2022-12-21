@@ -69,3 +69,5 @@ class AtributosStruct():
     def setBandra(self,bandera):
         self.cambiaTipo=bandera
         
+#coloco esto por que necesito mandar un cambio desde instruccines para que se guarde el cambio de nombre
+# a la carpeta en el repo,, buenoooooo eso espero xd
