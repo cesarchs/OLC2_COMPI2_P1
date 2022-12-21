@@ -1,4 +1,5 @@
-from Optimizador.InstruccionC3D import *
+from almacenar.tipo import Bandera
+from optimizacion.c3d import *
 
 class Goto(C3DInstruction):
     

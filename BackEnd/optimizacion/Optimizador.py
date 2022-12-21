@@ -239,4 +239,141 @@ class Optimizador:
                                 ret = True               
                                 break
         return ret    
+
+  #*******************************************************************************************************************************        
+    #***************************************************** REGLA_5 *****************************************************************
+    #*******************************************************************************************************************************  
     
+    def Regla5(self,array):
+        'Optimizaciones de flujo de control'
+        ret = False
+        for i in range(len(array)):
+            actual = array[i]
+            actual.esLider=False#**
+            if type(actual) is If and not actual.deleted:
+                if i+1 < len(array):
+                    ret=self.Regla5aux(actual,array[i+1:len(array)])
+        return ret
+    
+    def Regla5aux(self,anterior,array):
+        ret = False
+        for i in range(len(array)):
+            actual=array[i]
+            actual.esLider=False#**
+            if type(actual) is Label and not actual.deleted and actual.id==anterior.label:
+                if not i+1 >= len(array):
+                    if type(array[i+1]) is Goto:
+                        #se genera copia de original
+                        copia = anterior.getCode()
+                        #->->->->->->->->->->->->->->
+                        array[i+1].banderaGo = True
+                        array[i+1].labelAux = anterior.label
+                        anterior.label = array[i+1].label
+                        self.ReporteMirilla.append({'regla':'Regla 5','ExpOr':str(copia),'ExpOp':str(anterior.getCode()),'fil':str(actual.line)})
+                        ret = True
+                        break
+        return ret
+        
+    
+    #*******************************************************************************************************************************        
+    #***************************************************** REGLA_6 *****************************************************************
+    #*******************************************************************************************************************************       
+    
+    def Regla6(self, array):
+        'Simplificación algebraica y reducción por fuerza'
+        ret = False
+        # Recorrer el arreglo de instrucciones C3D
+        for i in range(len(array)):
+            actual = array[i]
+            actual.esLider=False#**
+            # Si la instruccion es una Asignacion
+            if type(actual) is Asignacion and not actual.deleted:
+                # Si se esta asignando a si mismo
+                if type(actual.exp) is Expresion:
+                    if(actual.selfAssignment()):
+                    
+                        actualOpt = actual.exp.neutralOps()
+                        if actualOpt:
+                            self.ReporteMirilla.append({'regla':'Regla 6','ExpOr':str(actual.getCode()),'ExpOp':'instruccion eliminada: '+str(actual.getCode()),'fil':str(actual.line)})
+                            ret = True
+                            actual.deleted = True
+        return ret#ef Regla6(self,array):
+    
+    #*******************************************************************************************************************************        
+    #***************************************************** REGLA_7 *****************************************************************
+    #*******************************************************************************************************************************
+    
+    def Regla7(self, array):
+        'Simplificación algebraica y reducción por fuerza'
+        ret = False
+
+        # Recorrer el arreglo de instrucciones C3D
+        for i in range(len(array)):
+            actual = array[i]
+            actual.esLider=False#**
+            # Si la instruccion es una Asignacion
+            if type(actual) is Asignacion and not actual.deleted:
+                if type(actual.exp) is Expresion:
+                    if actual.validarRegla7():
+                        #copia de actual antes de quitar ops
+                        copia = actual.getCode()
+                        actualOpt = actual.exp.OperandoOperador()
+                        if actualOpt:
+                            self.ReporteMirilla.append({'regla':'Regla 7','ExpOr':str(copia),'ExpOp':str(actual.getCode()),'fil':str(actual.line)})
+                            ret = True
+                            #actual.deleted = True
+        return ret#ef Regla6(self,array):
+    
+    #*******************************************************************************************************************************        
+    #***************************************************** REGLA_8 *****************************************************************
+    #*******************************************************************************************************************************
+    def Regla8(self, array):
+        'Simplificación algebraica y reducción por fuerza'
+        ret = False
+        # Recorrer el arreglo de instrucciones C3D
+        for i in range(len(array)):
+            actual = array[i]
+            actual.esLider=False#**
+            # Si la instruccion es una Asignacion
+            if type(actual) is Asignacion and not actual.deleted:
+                flagReportar=False
+                copia = actual.getCode()
+                if type(actual.exp) is Expresion:
+                    #x=y*0
+                    if (actual.exp.left.getCode() == '0' and type(actual.exp.right) is Literal) or (type(actual.exp.left) is Literal and actual.exp.right.getCode() == '0'):
+                        if actual.exp.typeOp == '*':
+                            actual.exp.left = Literal('0',actual.line,actual.column)
+                            actual.exp.right= Literal('',actual.line,actual.column)
+                            actual.exp.typeOp = ''
+                            flagReportar = True
+                        #x=0/y
+                        elif (actual.exp.left.getCode()=='0' and type(actual.exp.right) is Literal):
+                            if actual.exp.typeOp == '/':
+                                actual.exp.left = Literal('0',actual.line,actual.column)
+                                actual.exp.right= Literal('',actual.line,actual.column)
+                                actual.exp.typeOp = ''
+                                flagReportar = True
+                    #x=y*2
+                    elif (actual.exp.left.getCode() == '2' and type(actual.exp.right) is Literal):
+                        if actual.exp.typeOp == '*':
+                            actual.exp.left = actual.exp.right 
+                            actual.exp.typeOp = '+'
+                            flagReportar = True
+                    elif (type(actual.exp.left) is Literal and actual.exp.right.getCode() == '2'):
+                        if actual.exp.typeOp == '*':
+                            actual.exp.right = actual.exp.left 
+                            actual.exp.typeOp = '+'
+                            flagReportar = True
+                if flagReportar:
+                    self.ReporteMirilla.append({'regla':'Regla 8','ExpOr':str(copia),'ExpOp':str(actual.getCode()),'fil':str(actual.line)})
+                    flagReportar=False
+                    ret = True
+        return ret
+    
+    def buscarGotoSueltos(self):
+        'metodo para eliminar gotos de bools'
+        for func in self.code:
+            for goto in func.instr:
+                if type(goto) is Goto:
+                    if goto.label in self.gotoSueltos:
+                        goto.deleted=True
