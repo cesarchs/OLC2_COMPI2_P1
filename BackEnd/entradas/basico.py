@@ -1,14 +1,14 @@
 # Declaración de Variables
-var1 = 0::int;
-var2 = 0::int;
-var3 = 0::int;
+var1 = 0:int;
+var2 = 0:int;
+var3 = 0:int;
 
-string1 = ""::string;
-string2 = ""::string;
+string1 = "":string;
+string2 = "":string;
 
-bool1 = False::bool;
-bool2 = False::bool;
-bool3 = False::bool;
+bool1 = False:bool;
+bool2 = False:bool;
+bool3 = False:bool;
 
 # Println y Print
 println("Verificando valores variables");
@@ -33,9 +33,9 @@ bool2 = ((var1 + 125 / 5 * 3 - 1) < ((var3 + 100 / 5) * (var2 - 10)));
 println(bool1, " ", bool2);
 
 # Asignación de Variables y Operaciones Lógicas (Corto Circuito)
-bool3 = (var1 >= 120 || var2 <= 10) && (var3 > 125 || var3 < 10) || (var1 == 120 && 120 != var2);
+bool3 = (var1 >= 120 or var2 <= 10) and (var3 > 125 or var3 < 10) or (var1 == 120 and 120 != var2);
 println(bool3);
-bool3 = 100 == 100 && 100 != 100 || 100 == 100 && 100 == 100;
+bool3 = 100 == 100 and 100 != 100 or 100 == 100 and 100 == 100;
 println(bool3);
 
 string1 = "Hola";

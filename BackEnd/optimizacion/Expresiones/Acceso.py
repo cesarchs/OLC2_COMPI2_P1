@@ -1,4 +1,4 @@
-from Optimizador.InstruccionC3D import *
+from optimizacion.c3d import *
 class Access(C3DInstruction):
     
     def __init__(self, StackHeap, position, line, column):
