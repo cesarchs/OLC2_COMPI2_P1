@@ -1,4 +1,4 @@
-from optimizacion.Expresiones.literal import Literal
+from optimizacion.Expresiones.Literal import Literal
 from optimizacion.c3d import *
 
 class Expresion(C3DInstruction):

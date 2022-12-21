@@ -1,9 +1,9 @@
 from typing import Literal
 
 from flask.scaffold import F
-from optimizacion.Expresiones.expresion import Expresion
+from optimizacion.Expresiones.Expresiones import Expresion
 from optimizacion.c3d import *
-from optimizacion.Expresiones.literal import *
+from optimizacion.Expresiones.Literal import *
 
 class Asignacion(C3DInstruction):
     def __init__(self, place, exp, line, column):
