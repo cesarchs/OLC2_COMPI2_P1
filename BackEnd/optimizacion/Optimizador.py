@@ -377,3 +377,103 @@ class Optimizador:
                 if type(goto) is Goto:
                     if goto.label in self.gotoSueltos:
                         goto.deleted=True
+
+    #*******************************************************************************************************************************        
+    #***************************************************** OPTIMIZACION POR BLOQUES *****************************************************************
+    #*******************************************************************************************************************************
+    def Bloques(self):
+        self.Lbloques=[]
+        self.CrearBloques()
+        for bloquesfunc in self.Lbloques:
+            for bloque in bloquesfunc:
+                self.Regla1Block(bloque.codigo)
+        #while o for para aplicar reglas
+        
+        
+        
+        
+        
+    
+    def CrearBloques(self):
+        self.getLideres()#crea los lideres del bloque
+        self.getBloques()#crea los lideres del bloque
+        self.unirBloques()
+    
+    def getLideres(self):
+        for funcion in self.code:
+            #la primera cuadrupa es un lider
+            funcion.instr[0].esLider = True
+            ##el siguiente a un goto es lider
+            bandera = False#bandera para una nueva funcion se coloca falsa
+            for instruccion in funcion.instr:
+                if bandera:#si la bandera es true se agrega lider
+                    instruccion.esLider = True
+                    bandera = False#se regresa a estado original hasta encontrar otro lider 
+                if type(instruccion) is Goto or type(instruccion) is If:
+                    bandera = True
+                #las labels se dejan defaul como lider true
+                #para cumplir la regla 
+    
+    def getBloques(self):
+        for funcion in self.code:
+            #creacion bloque de funcion
+            bloques = []
+            bloque = None #validador de bloque existente
+            for instruccion in funcion.instr:
+                if instruccion.esLider:
+                    #si ya existe bloque solo se agrega
+                    if bloque != None:
+                        bloques.append(bloque)
+                    bloque = Bloque(instruccion)
+                bloque.codigo.append(instruccion)
+            bloques.append(bloque)
+            self.Lbloques.append(bloques)#se almacena cada bloque en la lista de bloques
+    
+    def unirBloques(self):
+        #para almacenar lo de cada funcion que trae el c3d
+        for funcion in self.Lbloques:
+            bloqueanterior = None
+            for bloque in funcion:
+                if bloqueanterior == None:
+                    bloqueanterior = bloque
+                    continue
+                bloqueanterior.siguientes.append(bloque)
+                bloqueanterior = bloque
+            
+        for bloque in funcion:
+            ultimaInstruccion = bloque.codigo[len(bloque.codigo)-1]
+            if type(ultimaInstruccion) is Goto or type(ultimaInstruccion) is If:
+                label = ultimaInstruccion.label
+                
+                for val in funcion:
+                    if type(val.primertupla) is Label and val.primertupla.id == label:
+                        bloque.siguientes.append(val)
+                        break
+        
+
+    def Regla1Block(self,bloque):
+        'Optimizaciones de flujo de control'
+        ret = False
+        for i in range(len(bloque)):
+            actual = bloque[i]
+            if type(actual) is Asignacion and actual.opt == False and 'stack' not in  actual.place.getCode() and 'heap' not in  actual.place.getCode() and 'stack' not in  actual.exp.getCode() and 'heap' not in  actual.exp.getCode():
+                for j in range(len(bloque)):
+                    j=j+(i+1)
+                    if j >= len(bloque):
+                        break
+                    siguiente = bloque[j]
+                    if type(siguiente) is Asignacion and siguiente.opt == False and 'stack' not in  siguiente.place.getCode() and 'heap' not in  siguiente.place.getCode() and 'stack' not in  siguiente.exp.getCode() and 'heap' not in siguiente.exp.getCode():
+                        if type(siguiente.exp) is Expresion:
+                            if actual.place.getCode() != siguiente.place.getCode() and actual.place.getCode() != siguiente.exp.left.getCode() and actual.place.getCode() != siguiente.exp.right.getCode():
+                                if actual.exp.getCode() == siguiente.exp.getCode():
+                                    copia=siguiente.getCode()
+                                    siguiente.exp.left= Literal(actual.place.getCode(),siguiente.line,siguiente.column)
+                                    siguiente.exp.right = Literal('',siguiente.line,siguiente.column)
+                                    siguiente.exp.typeOp=''
+                                    siguiente.opt = True
+                                    self.ReporteBloques.append({'regla':'Regla 1','ExpOr':str(copia),'ExpOp':str(siguiente.getCode()),'fil':str(siguiente.line)})
+                            else:
+                                if actual.place.getCode() != siguiente.place.getCode() and actual.place.getCode() != siguiente.exp.getCode() :
+                                    siguiente.exp= Literal(actual.place.getCode(),siguiente.line,siguiente.column)
+                                
+                                
