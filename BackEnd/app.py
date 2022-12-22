@@ -83,7 +83,7 @@ def vista():
                     instrucciones = c3d.parseOP(valorr)
                     if instrucciones != None:
                         instrucciones.Mirilla()
-                        salida = instrucciones.getCode()#aqui esta el codigo optimizado
+                        salida = instrucciones.getCode()                #aqui esta el codigo optimizado
                         #print(salida)
                         
                         erroress['consola']=valorr
@@ -108,7 +108,15 @@ def vista():
                     #mando entrada en c3d para optimizar
                     instrucciones = c3d.parseOP(valorrr)
                     if instrucciones != None:
-
+                        instrucciones.Bloques()
+                        salida = instrucciones.getCode()                #aqui esta el codigo optimizado
+                        #print(salida)
+                        
+                        erroress['consola']=valorrr
+                        #erroress['c3d']=backupLista['c3d']
+                        erroress['bloques']=salida
+                        #backupLista['bloques']=salida
+                        erroress['reporteBloques']= instrucciones.getReporteBloques()
                         
                         return render_template("analisis.html",initial=erroress['entrada'],regres = erroress['consola'],c3dopt=erroress['c3d'],c3doptb=erroress['bloques'],users=erroress['ts'],opts=erroress['reporteMirilla'],optsb=erroress['reporteBloques'],errors=erroress['error'],hola=erroress['arbol'],dotcode=erroress['arbol'])
                     else:
