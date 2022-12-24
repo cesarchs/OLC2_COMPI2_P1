@@ -7,6 +7,12 @@ sys.setrecursionlimit(10**6)
 
 from almacenar.error import Error
 
+#t.type = tipo de token (como una cadena, id, etc)
+#t.value = lexema del texto real coincidente
+#t.lineno = numero de linea actual
+#t.lexpos = posicion del token con relacion a la entrada
+#t.lexer = actualiza el no. de linea
+
 
 ListaErrores = []
 
