@@ -18,8 +18,8 @@ ListaErrores = []
 
 #LISTA DE PALABRAS RESERVADAS PARA pytopy
 reservadas = {
-    'None'   : 'RNOTHING',
-    'int'     : 'RINT',
+    'None'      : 'RNOTHING',
+    'int'       : 'RINT',
     'bool'      : 'RBOOL',
     'Char'      : 'RCHAR',  
     'string'    : 'RSTRING',
@@ -29,7 +29,7 @@ reservadas = {
     'log'       : 'RLOG',
     'print'     : 'RPRINT',
     'println'   : 'RPRINTLN',
-    'function'  : 'RFUNCTION',
+    'def'       : 'RFUNCTION',
     'global'    : 'RGLOBAL',
     'begin'     : 'RBEGIN',
     'end'       : 'REND',
@@ -46,7 +46,7 @@ reservadas = {
     'for'       : 'RFOR',
     'in'        : 'RIN',
     'push!'     : 'RPUSHFNA',
-    'length'    : 'RLENGTHFNA',
+    'len'       : 'RLENGTHFNA',
     'True'      : 'RTRUE',
     'False'     : 'RFALSE',
     'break'     : 'RBREAK',

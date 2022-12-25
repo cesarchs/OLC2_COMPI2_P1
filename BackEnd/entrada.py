@@ -1,4 +1,4 @@
-function imprimirInicial()
+def imprimirInicial()
     index = 0
         
         while (index != 12)
