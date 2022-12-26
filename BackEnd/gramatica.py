@@ -454,12 +454,12 @@ def p_listacorchetes_2(t):
     #///////////////////////////////////////////////////////////////////////////STRUCTS///////////////////////////////////////////////////////////////////////////
 #IN-MUTABLE
 def p_instr_crearstruct(t):
-    'instr_crearstruct  :   RSTRUCT ID listatributes PTCOMA REND'
+    'instr_crearstruct  :   RSTRUCT ID listatributes PTCOMA '
                        #ID  atributs  mutable?
     t[0] = NuevoStruct(t[2], t[3],    False,    t.lineno(1),buscar_columna(input, t.slice[1]))
 #MUTABLE
 def p_instr_crearstructM(t):
-    'instr_crearstruct  :   RMUTABLE RSTRUCT ID listatributes PTCOMA REND'
+    'instr_crearstruct  :   RMUTABLE RSTRUCT ID listatributes PTCOMA '
                     #    ID  ATRIBUTS  MUTABLE?
     t[0] = NuevoStruct(t[3], t[4],    True,    t.lineno(1),buscar_columna(input, t.slice[1]))
 
