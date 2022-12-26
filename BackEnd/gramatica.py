@@ -7,13 +7,19 @@ sys.setrecursionlimit(10**6)
 
 from almacenar.error import Error
 
+#t.type = tipo de token (como una cadena, id, etc)
+#t.value = lexema del texto real coincidente
+#t.lineno = numero de linea actual
+#t.lexpos = posicion del token con relacion a la entrada
+#t.lexer = actualiza el no. de linea
+
 
 ListaErrores = []
 
 #LISTA DE PALABRAS RESERVADAS PARA pytopy
 reservadas = {
-    'None'   : 'RNOTHING',
-    'int'     : 'RINT',
+    'None'      : 'RNOTHING',
+    'int'       : 'RINT',
     'bool'      : 'RBOOL',
     'Char'      : 'RCHAR',  
     'string'    : 'RSTRING',
@@ -23,7 +29,7 @@ reservadas = {
     'log'       : 'RLOG',
     'print'     : 'RPRINT',
     'println'   : 'RPRINTLN',
-    'function'  : 'RFUNCTION',
+    'def'       : 'RFUNCTION',
     'global'    : 'RGLOBAL',
     'begin'     : 'RBEGIN',
     'end'       : 'REND',
@@ -35,12 +41,12 @@ reservadas = {
     'lower'     : 'RLOWERCASEFN',
     'float'     : 'RFLOATFN',
     'if'        : 'RIF',
-    'elseif'    : 'RELSEIF',
+    'elif'      : 'RELSEIF',
     'else'      : 'RELSE',
     'for'       : 'RFOR',
     'in'        : 'RIN',
     'push!'     : 'RPUSHFNA',
-    'length'    : 'RLENGTHFNA',
+    'len'       : 'RLENGTHFNA',
     'True'      : 'RTRUE',
     'False'     : 'RFALSE',
     'break'     : 'RBREAK',
@@ -50,7 +56,8 @@ reservadas = {
     #nuevos por cambio de sitaxis del sistema
     'and'       : 'AND',
     'or'        : 'OR',
-    'not'       : 'NOT'
+    'not'       : 'NOT',
+    'range'     : 'RRANGE'
 }
 
 
@@ -447,12 +454,12 @@ def p_listacorchetes_2(t):
     #///////////////////////////////////////////////////////////////////////////STRUCTS///////////////////////////////////////////////////////////////////////////
 #IN-MUTABLE
 def p_instr_crearstruct(t):
-    'instr_crearstruct  :   RSTRUCT ID listatributes PTCOMA REND'
+    'instr_crearstruct  :   RSTRUCT ID listatributes PTCOMA '
                        #ID  atributs  mutable?
     t[0] = NuevoStruct(t[2], t[3],    False,    t.lineno(1),buscar_columna(input, t.slice[1]))
 #MUTABLE
 def p_instr_crearstructM(t):
-    'instr_crearstruct  :   RMUTABLE RSTRUCT ID listatributes PTCOMA REND'
+    'instr_crearstruct  :   RMUTABLE RSTRUCT ID listatributes PTCOMA '
                     #    ID  ATRIBUTS  MUTABLE?
     t[0] = NuevoStruct(t[3], t[4],    True,    t.lineno(1),buscar_columna(input, t.slice[1]))
 
@@ -680,27 +687,27 @@ def p_instr_while(t):
     t[0] = Mientras(t[2],  t[3],  t.lineno(1),buscar_columna(input, t.slice[1]))   
 #////////////////////////////////////////////////////////INSTRUCCION FOR/////////////////////////////////////////////////////////////////
 def p_instr_for(t):
-    'instr_for      :   RFOR ID RIN lexpsfor instrucciones REND '
+    'instr_for      :   RFOR ID RIN lexpsfor instrucciones '
                 #ID   #EXP   #instrs
     t[0] = Para(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
     
 def p_instr_forarr(t):
-    'instr_for      :   RFOR ID RIN lexpsforarray instrucciones REND '
+    'instr_for      :   RFOR ID RIN lexpsforarray instrucciones '
                 #ID   #EXP   #instrs
     t[0] = ParaArray(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_instr_forarr2(t):
-    'instr_for      :   RFOR ID RIN ID instrucciones REND '
+    'instr_for      :   RFOR ID RIN ID instrucciones '
                 #ID   #EXP   #instrs
     t[0] = ParaArrayD(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
 
 def p_instr_forstring(t):
-    'instr_for      :   RFOR ID RIN CADENA instrucciones REND '
+    'instr_for      :   RFOR ID RIN CADENA instrucciones '
                 #ID   #EXP   #instrs
     t[0] = ParaStr(t[2], t[4],   t[5],     t.lineno(1),buscar_columna(input, t.slice[1]))
     
 def p_lexpsfor(t):
-    'lexpsfor       : expresion DP expresion'
+    'lexpsfor       : expresion RRANGE expresion'
     t[0]= Aritmetica(OpsAritmetico.DP,t[1],t[3],t.lineno(2),buscar_columna(input, t.slice[2]))
 def p_lexpsforarray(t):
     'lexpsforarray       : CORIZQ list_expss CORDER'
